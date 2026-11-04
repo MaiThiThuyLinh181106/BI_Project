@@ -1,0 +1,45 @@
+table Dim_Client
+	lineageTag: c8302226-c113-481d-b803-034a073fade0
+
+	column client_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6b05d64e-70d4-48f0-a13c-dee14c3b42f7
+		summarizeBy: none
+		sourceColumn: client_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column birth_number
+		dataType: int64
+		formatString: 0
+		lineageTag: b9f6ddff-e239-46c8-a482-3afa94fa6db7
+		summarizeBy: none
+		sourceColumn: birth_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column district_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 48adf69c-5505-4dba-ab76-a46fc5deea06
+		summarizeBy: none
+		sourceColumn: district_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Client = m
+		mode: import
+		queryGroup: Dimension
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "client.csv"),[Delimiter=";", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers1" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers1",{{"client_id", Int64.Type}, {"birth_number", Int64.Type}, {"district_id", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

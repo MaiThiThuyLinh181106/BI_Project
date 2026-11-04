@@ -1,0 +1,8 @@
+expression DataFolder = "D:\BI_Project\data\berka\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: a6408ae8-4fc1-4911-b8d4-8cded9c79840
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

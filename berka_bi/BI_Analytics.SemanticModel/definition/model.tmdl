@@ -7,9 +7,33 @@ model Model
 		legacyRedirects
 		returnErrorValuesAsNull
 
+queryGroup Parameters
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Fact
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup Dimension
+
+	annotation PBI_QueryGroupOrder = 2
+
 annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DevMode"]
+
+annotation PBI_QueryOrder = ["DataFolder","Fact_Transaction","Dim_Account","Fact_Card","Dim_Client","Bridge_Disp","Dim_District","Fact_Loan","Fact_Order","Dim_Date"]
+
+ref table Fact_Transaction
+ref table Dim_Account
+ref table Fact_Card
+ref table Dim_Client
+ref table Bridge_Disp
+ref table Dim_District
+ref table Fact_Loan
+ref table Fact_Order
+ref table Dim_Date
 
 ref cultureInfo en-US
 

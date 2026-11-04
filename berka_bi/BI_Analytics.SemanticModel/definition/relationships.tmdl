@@ -1,0 +1,27 @@
+relationship AutoDetected_aa5f851a-f464-415a-bb6f-2d1edec504e2
+	fromColumn: Fact_Transaction.account_id
+	toColumn: Dim_Account.account_id
+
+relationship AutoDetected_20b0c7a4-f95d-40e0-b5c0-16bfcae73e77
+	fromColumn: Bridge_Disp.account_id
+	toColumn: Dim_Account.account_id
+
+relationship AutoDetected_9e84eaef-9275-4e90-9575-39943c93ad9b
+	crossFilteringBehavior: bothDirections
+	fromColumn: Fact_Loan.account_id
+	toColumn: Dim_Account.account_id
+
+relationship AutoDetected_84fdc95a-7966-4087-91fd-a89b979774bc
+	fromColumn: Fact_Order.account_id
+	toColumn: Dim_Account.account_id
+
+relationship AutoDetected_4b61d7bc-284b-4647-8e9a-eab4f9c6f4f9
+	crossFilteringBehavior: bothDirections
+	fromColumn: Fact_Card.disp_id
+	toColumn: Bridge_Disp.disp_id
+
+relationship AutoDetected_b8ba5d1a-8b4e-4038-a60b-8a7a00eb7030
+	crossFilteringBehavior: bothDirections
+	fromColumn: Bridge_Disp.client_id
+	toColumn: Dim_Client.client_id
+

@@ -1,0 +1,52 @@
+table Bridge_Disp
+	lineageTag: 5546ca2d-a46c-48f5-a99f-fbd6dab63aa2
+
+	column disp_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 43929066-61c1-4d6e-b56f-25680721ab22
+		summarizeBy: none
+		sourceColumn: disp_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column client_id
+		dataType: int64
+		formatString: 0
+		lineageTag: bce9b887-6815-4c83-8f94-9c06fa69bb6e
+		summarizeBy: none
+		sourceColumn: client_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1128f666-3125-4dd9-a854-9ff26e2c9097
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: f488b2a3-18a7-474d-9f59-b43f92f7ff83
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Bridge_Disp = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "disp.csv"),[Delimiter=";", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"disp_id", Int64.Type}, {"client_id", Int64.Type}, {"account_id", Int64.Type}, {"type", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

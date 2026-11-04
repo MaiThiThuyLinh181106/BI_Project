@@ -1,0 +1,71 @@
+table Fact_Order
+	lineageTag: e41e38e2-810b-4c03-aa68-6b146f35b4c0
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a789e47-58b4-4973-9524-49c28097baf5
+		summarizeBy: sum
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d2f5e0f-6589-4e9b-b960-ad4c226abaf7
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column bank_to
+		dataType: string
+		lineageTag: 595869ca-e671-4510-9c13-3ebc824925ed
+		summarizeBy: none
+		sourceColumn: bank_to
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_to
+		dataType: int64
+		formatString: 0
+		lineageTag: 464d9424-d1b1-4daf-a1ab-a8a95d04d7f6
+		summarizeBy: sum
+		sourceColumn: account_to
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: double
+		lineageTag: ac347935-e6d7-4f1a-811b-b1dea4663354
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column k_symbol
+		dataType: string
+		lineageTag: 6a6b3b4f-2181-44be-a6f7-0b5ea5ba7cee
+		summarizeBy: none
+		sourceColumn: k_symbol
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Order = m
+		mode: import
+		queryGroup: Fact
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "order.csv"),[Delimiter=";", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"order_id", Int64.Type}, {"account_id", Int64.Type}, {"bank_to", type text}, {"account_to", Int64.Type}, {"amount", type number}, {"k_symbol", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

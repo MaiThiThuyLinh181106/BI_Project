@@ -1,0 +1,52 @@
+table Fact_Card
+	lineageTag: 366ed058-dfbb-4303-b291-86122b2fdd10
+
+	column card_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f103c044-cc8a-4bd5-a12b-7d745f8e113f
+		summarizeBy: sum
+		sourceColumn: card_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column disp_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d4646cf-a60b-48bd-86de-27d5577ea655
+		summarizeBy: none
+		sourceColumn: disp_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: b5d27e37-d549-4e8d-88ce-4fdc96478880
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column issued
+		dataType: string
+		lineageTag: e52bcf52-0482-493d-a2e8-b985d595c008
+		summarizeBy: none
+		sourceColumn: issued
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Card = m
+		mode: import
+		queryGroup: Fact
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "card.csv"),[Delimiter=";", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers1" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers1",{{"card_id", Int64.Type}, {"disp_id", Int64.Type}, {"type", type text}, {"issued", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

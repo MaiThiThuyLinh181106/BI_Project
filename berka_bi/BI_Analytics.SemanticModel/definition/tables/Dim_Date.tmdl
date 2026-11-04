@@ -1,0 +1,138 @@
+table Dim_Date
+	lineageTag: f61e227a-7bb9-4f64-837f-98615521de6f
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 6c6be745-cfd3-4988-9984-e61b91f541a3
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 507453d4-e8c2-4ca4-ae4f-58d1ee5fce16
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = User
+
+	column Quarter
+		dataType: string
+		lineageTag: 1c316db4-b6a2-48c0-a8ee-9f58209bd5b1
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNo
+		dataType: int64
+		formatString: 0
+		lineageTag: ba9ec455-1586-42dd-97f1-2f298a121849
+		summarizeBy: none
+		sourceColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+	column MonthName
+		dataType: string
+		lineageTag: b08c4406-32f5-44fb-95ee-b077e612ba60
+		summarizeBy: none
+		sourceColumn: MonthName
+		sortByColumn: MonthNo
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: string
+		lineageTag: 2127e222-7085-4a0c-930a-17b1cde003dc
+		summarizeBy: none
+		sourceColumn: YearMonth
+		sortByColumn: YearMonthKey
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthKey
+		dataType: int64
+		formatString: 0
+		lineageTag: a5189d67-5282-4cc7-bac6-8d3be825c9bf
+		summarizeBy: none
+		sourceColumn: YearMonthKey
+
+		annotation SummarizationSetBy = User
+
+	column DayOfMonth
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ba2dfac-e1c5-4b60-8e4a-f239d95061ad
+		summarizeBy: none
+		sourceColumn: DayOfMonth
+
+		annotation SummarizationSetBy = User
+
+	column WeekdayNo
+		dataType: int64
+		formatString: 0
+		lineageTag: dc3fc42b-ca5d-40fa-8f49-4ed878c14a5e
+		summarizeBy: none
+		sourceColumn: WeekdayNo
+
+		annotation SummarizationSetBy = User
+
+	column WeekdayName
+		dataType: string
+		lineageTag: e8565596-91a3-44f8-bc10-1c16469c808e
+		summarizeBy: none
+		sourceColumn: WeekdayName
+		sortByColumn: WeekdayNo
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsMonthEnd
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6fdc7574-cb23-433f-9f66-c51053c4375a
+		summarizeBy: none
+		sourceColumn: IsMonthEnd
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Date = m
+		mode: import
+		queryGroup: Dimension
+		source =
+				let
+				    StartDate = #date(1993, 1, 1),
+				    EndDate   = #date(1998, 12, 31),
+				    DateList  = List.Dates(StartDate, Duration.Days(EndDate - StartDate) + 1, #duration(1, 0, 0, 0)),
+				    Source    = Table.FromList(DateList, Splitter.SplitByNothing(), {"Date"}),
+				    Typed     = Table.TransformColumnTypes(Source, {{"Date", type date}}),
+				    AddYear       = Table.AddColumn(Typed, "Year", each Date.Year([Date]), Int64.Type),
+				    AddQuarter    = Table.AddColumn(AddYear, "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date])), type text),
+				    AddMonthNo    = Table.AddColumn(AddQuarter, "MonthNo", each Date.Month([Date]), Int64.Type),
+				    AddMonthName  = Table.AddColumn(AddMonthNo, "MonthName", each Date.ToText([Date], "MMM", "en-US"), type text),
+				    AddYearMonth  = Table.AddColumn(AddMonthName, "YearMonth", each Date.ToText([Date], "yyyy-MM"), type text),
+				    AddYMKey      = Table.AddColumn(AddYearMonth, "YearMonthKey", each Date.Year([Date]) * 100 + Date.Month([Date]), Int64.Type),
+				    AddDayOfMonth = Table.AddColumn(AddYMKey, "DayOfMonth", each Date.Day([Date]), Int64.Type),
+				    AddWeekdayNo  = Table.AddColumn(AddDayOfMonth, "WeekdayNo", each Date.DayOfWeek([Date], Day.Monday) + 1, Int64.Type),
+				    AddWeekday    = Table.AddColumn(AddWeekdayNo, "WeekdayName", each Date.ToText([Date], "ddd", "en-US"), type text),
+				    AddIsMonthEnd = Table.AddColumn(AddWeekday, "IsMonthEnd", each [Date] = Date.EndOfMonth([Date]), type logical)
+				in
+				    AddIsMonthEnd
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

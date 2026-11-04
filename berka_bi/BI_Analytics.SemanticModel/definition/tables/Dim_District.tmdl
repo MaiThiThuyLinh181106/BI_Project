@@ -1,0 +1,160 @@
+table Dim_District
+	lineageTag: 477aebb6-e742-464f-a165-53c72bbcbcb5
+
+	column A1
+		dataType: int64
+		formatString: 0
+		lineageTag: 88cbbd76-3957-471c-a026-fcb3471cbb51
+		summarizeBy: sum
+		sourceColumn: A1
+
+		annotation SummarizationSetBy = Automatic
+
+	column A2
+		dataType: string
+		lineageTag: 8248270b-f46a-4bd9-89a2-71a922cd4243
+		summarizeBy: none
+		sourceColumn: A2
+
+		annotation SummarizationSetBy = Automatic
+
+	column A3
+		dataType: string
+		lineageTag: 3fe310fc-bbf4-487d-9d80-4822ef78c2bc
+		summarizeBy: none
+		sourceColumn: A3
+
+		annotation SummarizationSetBy = Automatic
+
+	column A4
+		dataType: int64
+		formatString: 0
+		lineageTag: 4daf1d72-c3c6-4ad4-b806-2a4193064c30
+		summarizeBy: sum
+		sourceColumn: A4
+
+		annotation SummarizationSetBy = Automatic
+
+	column A5
+		dataType: int64
+		formatString: 0
+		lineageTag: 130d0aa9-5069-4ba1-befb-7ea9269bb55d
+		summarizeBy: sum
+		sourceColumn: A5
+
+		annotation SummarizationSetBy = Automatic
+
+	column A6
+		dataType: int64
+		formatString: 0
+		lineageTag: 84d7c30d-a8a2-4071-8543-2fc0097a0406
+		summarizeBy: sum
+		sourceColumn: A6
+
+		annotation SummarizationSetBy = Automatic
+
+	column A7
+		dataType: int64
+		formatString: 0
+		lineageTag: 0085b74a-4e1a-4d91-b875-35b4c29b5f07
+		summarizeBy: sum
+		sourceColumn: A7
+
+		annotation SummarizationSetBy = Automatic
+
+	column A8
+		dataType: int64
+		formatString: 0
+		lineageTag: 38eef909-5145-4c66-b08d-6dc07fddc607
+		summarizeBy: sum
+		sourceColumn: A8
+
+		annotation SummarizationSetBy = Automatic
+
+	column A9
+		dataType: int64
+		formatString: 0
+		lineageTag: f01f8bd5-1756-49a7-92dd-0d2aa630320a
+		summarizeBy: sum
+		sourceColumn: A9
+
+		annotation SummarizationSetBy = Automatic
+
+	column A10
+		dataType: double
+		lineageTag: b043d3ab-37ca-4a46-bf84-0da8fd2b12ee
+		summarizeBy: sum
+		sourceColumn: A10
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column A11
+		dataType: int64
+		formatString: 0
+		lineageTag: 21171c97-22b5-46f2-852c-54d10758090d
+		summarizeBy: sum
+		sourceColumn: A11
+
+		annotation SummarizationSetBy = Automatic
+
+	column A12
+		dataType: string
+		lineageTag: 32a17d9f-04c9-4b76-91fb-6ea5b256781a
+		summarizeBy: none
+		sourceColumn: A12
+
+		annotation SummarizationSetBy = Automatic
+
+	column A13
+		dataType: double
+		lineageTag: c2226b36-eadd-4e81-ab43-032749585988
+		summarizeBy: sum
+		sourceColumn: A13
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column A14
+		dataType: int64
+		formatString: 0
+		lineageTag: e03afff5-3b1e-42f5-ae18-825ac9a75faf
+		summarizeBy: sum
+		sourceColumn: A14
+
+		annotation SummarizationSetBy = Automatic
+
+	column A15
+		dataType: string
+		lineageTag: 2d3d8a33-23b6-4bbe-b779-82e990dcbbf3
+		summarizeBy: none
+		sourceColumn: A15
+
+		annotation SummarizationSetBy = Automatic
+
+	column A16
+		dataType: int64
+		formatString: 0
+		lineageTag: 26d78a65-e17b-435a-b041-ee71028c699b
+		summarizeBy: sum
+		sourceColumn: A16
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_District = m
+		mode: import
+		queryGroup: Dimension
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "district.csv"),[Delimiter=";", Columns=16, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"A1", Int64.Type}, {"A2", type text}, {"A3", type text}, {"A4", Int64.Type}, {"A5", Int64.Type}, {"A6", Int64.Type}, {"A7", Int64.Type}, {"A8", Int64.Type}, {"A9", Int64.Type}, {"A10", type number}, {"A11", Int64.Type}, {"A12", type text}, {"A13", type number}, {"A14", Int64.Type}, {"A15", type text}, {"A16", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

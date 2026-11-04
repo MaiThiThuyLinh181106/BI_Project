@@ -1,0 +1,80 @@
+table Fact_Loan
+	lineageTag: 0a61b5a7-cf9b-45ea-8eff-f6910cadff8a
+
+	column loan_id
+		dataType: int64
+		formatString: 0
+		lineageTag: eee54d4d-bd5c-498a-8d5c-eeacf2d78a0d
+		summarizeBy: sum
+		sourceColumn: loan_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 36c4b11e-97a7-4258-a7ea-02338ad3b1be
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: int64
+		formatString: 0
+		lineageTag: f04ec1d1-5331-40a3-97d4-0b7cf7a14beb
+		summarizeBy: sum
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: int64
+		formatString: 0
+		lineageTag: a4ebf3c0-1a99-41dc-8404-2aca593ec629
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration
+		dataType: int64
+		formatString: 0
+		lineageTag: 1749afd5-c750-47f5-b41d-0c5ce696bb4c
+		summarizeBy: sum
+		sourceColumn: duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column payments
+		dataType: int64
+		formatString: 0
+		lineageTag: 945f5d5a-bcda-4a0d-a049-f7cdd3b4db5f
+		summarizeBy: sum
+		sourceColumn: payments
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: e440e174-1244-400a-a5f7-e68c022b363a
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Loan = m
+		mode: import
+		queryGroup: Fact
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "loan.csv"),[Delimiter=";", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"loan_id", Int64.Type}, {"account_id", Int64.Type}, {"date", Int64.Type}, {"amount", Int64.Type}, {"duration", Int64.Type}, {"payments", Int64.Type}, {"status", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
