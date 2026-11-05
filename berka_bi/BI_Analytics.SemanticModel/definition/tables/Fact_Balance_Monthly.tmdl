@@ -1,0 +1,90 @@
+table Fact_Balance_Monthly
+	lineageTag: 17dd00f5-9608-4f96-8b3f-79b388c26f70
+
+	column account_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 67219aa7-e9d3-41ce-a9d8-576ed6b1400a
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthEndDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9a43fc1a-6e2a-47e1-aa85-b26f2a567ba5
+		summarizeBy: none
+		sourceColumn: MonthEndDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column EndBalance
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: c6efd00e-4bfe-42f9-8019-2f3fafde51c7
+		summarizeBy: sum
+		sourceColumn: EndBalance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column MinBalance
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 8162be8a-2d5a-4585-8e49-3d7ce8635e3b
+		summarizeBy: sum
+		sourceColumn: MinBalance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column TransCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 9eb932a1-56c4-4b43-a6fe-d0204a6a837f
+		summarizeBy: sum
+		sourceColumn: TransCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsNegativeEnd
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: fc0e43f5-89ef-4269-ab91-a4a159a6b803
+		summarizeBy: none
+		sourceColumn: IsNegativeEnd
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Balance_Monthly = m
+		mode: import
+		queryGroup: Fact
+		source =
+				let
+				    Source = Fact_Transaction,
+				    Selected = Table.SelectColumns(Source, {"trans_id", "account_id", "TransDate", "balance"}),
+				    AddMonthEnd = Table.AddColumn(Selected, "MonthEndDate", each Date.EndOfMonth([TransDate]), type date),
+				
+				    // gom theo tài khoản và tháng
+				    Grouped = Table.Group(AddMonthEnd, {"account_id", "MonthEndDate"}, {
+				        // số dư sau giao dịch cuối cùng trong tháng
+				        {"EndBalance", each Table.Sort(_, {{"TransDate", Order.Descending}, {"trans_id", Order.Descending}}){0}[balance], Currency.Type},
+				        // số dư thấp nhất trong tháng
+				        {"MinBalance", each List.Min([balance]), Currency.Type},
+				        // số giao dịch trong tháng
+				        {"TransCount", each Table.RowCount(_), Int64.Type}
+				    }),
+				
+				    AddIsNegativeEnd = Table.AddColumn(Grouped, "IsNegativeEnd", each [EndBalance] < 0, type logical)
+				in
+				    AddIsNegativeEnd
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

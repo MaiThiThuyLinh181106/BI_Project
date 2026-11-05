@@ -1,0 +1,130 @@
+table Dim_TransType
+	lineageTag: 457ad2d8-dfab-470e-af04-b31665ba5e18
+
+	column TransTypeCode
+		dataType: string
+		lineageTag: 16f02785-182c-4e1d-bcd9-b4aa57427881
+		summarizeBy: none
+		sourceColumn: TransTypeCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: 2fc7e5e1-53fd-4d97-a0fc-7fbdb8ce0c42
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column operation
+		dataType: string
+		lineageTag: 019734dc-d2f4-4beb-a305-da5491d2c07b
+		summarizeBy: none
+		sourceColumn: operation
+
+		annotation SummarizationSetBy = Automatic
+
+	column k_symbol
+		dataType: string
+		lineageTag: 4801f7d1-4717-4ce1-8edd-b2ab4b1de518
+		summarizeBy: none
+		sourceColumn: k_symbol
+
+		annotation SummarizationSetBy = Automatic
+
+	column Direction
+		dataType: string
+		lineageTag: f5e18839-531f-4422-b75d-1f690b1be2f2
+		summarizeBy: none
+		sourceColumn: Direction
+
+		annotation SummarizationSetBy = Automatic
+
+	column OperationName
+		dataType: string
+		lineageTag: 81e0dafe-b9ff-42f8-85a1-07c99ce75d19
+		summarizeBy: none
+		sourceColumn: OperationName
+
+		annotation SummarizationSetBy = Automatic
+
+	column PurposeName
+		dataType: string
+		lineageTag: a926c950-b312-4f12-9931-8160b51efcb0
+		summarizeBy: none
+		sourceColumn: PurposeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: e6b79030-6fe8-44b7-9026-774da252d8ac
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsFeeIncome
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7f0039c3-39f1-4e01-a7b1-b9514e099578
+		summarizeBy: none
+		sourceColumn: IsFeeIncome
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_TransType = m
+		mode: import
+		queryGroup: Dimension
+		source =
+				let
+				    Source = Fact_Transaction,
+				    Selected = Table.SelectColumns(Source, {"TransTypeCode", "type", "operation", "k_symbol"}),
+				    Distinct = Table.Distinct(Selected, {"TransTypeCode"}),
+				
+				    //dịch mã tiếng Séc
+				    TypeMap = [PRIJEM = "Tiền vào", VYDAJ = "Tiền ra", VYBER = "Tiền ra"],
+				    OperationMap = [
+				        VKLAD = "Nộp tiền mặt",
+				        VYBER = "Rút tiền mặt",
+				        #"VYBER KARTOU" = "Rút tiền bằng thẻ",
+				        #"PREVOD Z UCTU" = "Nhận chuyển khoản",
+				        #"PREVOD NA UCET" = "Chuyển khoản đi"
+				    ],
+				    PurposeMap = [
+				        POJISTNE = "Thanh toán bảo hiểm",
+				        SLUZBY = "Phí sao kê",
+				        UROK = "Lãi trả cho khách",
+				        #"SANKC. UROK" = "Lãi phạt số dư âm",
+				        SIPO = "Chi tiêu gia đình",
+				        DUCHOD = "Lương hưu",
+				        UVER = "Trả nợ vay"
+				    ],
+				
+				    AddDirection = Table.AddColumn(Distinct, "Direction", each
+				        Record.FieldOrDefault(TypeMap, [type], "Không xác định"), type text),
+				    AddOperationName = Table.AddColumn(AddDirection, "OperationName", each
+				        if [operation] = "" then "Ngân hàng tự ghi (lãi, phí)"
+				        else Record.FieldOrDefault(OperationMap, [operation], [operation]), type text),
+				    AddPurposeName = Table.AddColumn(AddOperationName, "PurposeName", each
+				        if [k_symbol] = "" then "Không xác định"
+				        else Record.FieldOrDefault(PurposeMap, [k_symbol], [k_symbol]), type text),
+				
+				    // nhóm kênh giao dịch cho câu hỏi 5
+				    AddChannel = Table.AddColumn(AddPurposeName, "Channel", each
+				        if [operation] = "VYBER KARTOU" then "Thẻ"
+				        else if [operation] = "PREVOD Z UCTU" or [operation] = "PREVOD NA UCET" then "Chuyển khoản"
+				        else if [operation] = "VKLAD" or [operation] = "VYBER" then "Tiền mặt"
+				        else "Ngân hàng tự ghi", type text),
+				
+				    // cờ thu nhập phí cho KPI K04
+				    AddIsFeeIncome = Table.AddColumn(AddChannel, "IsFeeIncome", each
+				        [k_symbol] = "SLUZBY" or [k_symbol] = "SANKC. UROK", type logical)
+				in
+				    AddIsFeeIncome
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

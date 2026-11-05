@@ -19,25 +19,8 @@ table Fact_Order
 
 		annotation SummarizationSetBy = Automatic
 
-	column bank_to
-		dataType: string
-		lineageTag: 595869ca-e671-4510-9c13-3ebc824925ed
-		summarizeBy: none
-		sourceColumn: bank_to
-
-		annotation SummarizationSetBy = Automatic
-
-	column account_to
-		dataType: int64
-		formatString: 0
-		lineageTag: 464d9424-d1b1-4daf-a1ab-a8a95d04d7f6
-		summarizeBy: sum
-		sourceColumn: account_to
-
-		annotation SummarizationSetBy = Automatic
-
 	column amount
-		dataType: double
+		dataType: decimal
 		lineageTag: ac347935-e6d7-4f1a-811b-b1dea4663354
 		summarizeBy: sum
 		sourceColumn: amount
@@ -54,16 +37,40 @@ table Fact_Order
 
 		annotation SummarizationSetBy = Automatic
 
+	column PurposeName
+		dataType: string
+		lineageTag: be799393-55cc-489e-937e-db9fa9619143
+		summarizeBy: none
+		sourceColumn: PurposeName
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Fact_Order = m
 		mode: import
 		queryGroup: Fact
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "order.csv"),[Delimiter=";", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
-				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"order_id", Int64.Type}, {"account_id", Int64.Type}, {"bank_to", type text}, {"account_to", Int64.Type}, {"amount", type number}, {"k_symbol", type text}})
+				
+				    Source = Csv.Document(File.Contents(DataFolder & "order.csv"), [Delimiter=";", Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				
+				    // xoá cột ngân hàng + người nhậ không dùng đến
+				    RemovedColumns = Table.RemoveColumns(PromotedHeaders, {"bank_to", "account_to"}),
+				
+				    TrimmedText = Table.TransformColumns(RemovedColumns, {{"k_symbol", Text.Trim, type text}}),
+				    TypedColumns = Table.TransformColumnTypes(TrimmedText, {
+				        {"order_id", Int64.Type},
+				        {"account_id", Int64.Type},
+				        {"amount", Currency.Type}
+				    }, "en-US"),
+				
+				    // dịch mục đích lệnh chi cho câu hỏi 14
+				    PurposeMap = [POJISTNE = "Bảo hiểm", SIPO = "Chi tiêu gia đình", LEASING = "Thuê tài sản", UVER = "Trả nợ vay"],
+				    AddPurposeName = Table.AddColumn(TypedColumns, "PurposeName", each
+				        if [k_symbol] = null or [k_symbol] = "" then "Không xác định"
+				        else Record.FieldOrDefault(PurposeMap, [k_symbol], [k_symbol]), type text)
 				in
-				    #"Changed Type"
+				    AddPurposeName
 
 	annotation PBI_NavigationStepName = Navigation
 

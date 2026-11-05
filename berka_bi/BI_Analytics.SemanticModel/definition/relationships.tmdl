@@ -25,3 +25,19 @@ relationship AutoDetected_b8ba5d1a-8b4e-4038-a60b-8a7a00eb7030
 	fromColumn: Bridge_Disp.client_id
 	toColumn: Dim_Client.client_id
 
+relationship a9e3980f-5911-392b-804f-5b9e38ebb5a4
+	fromColumn: Fact_Transaction.TransDate
+	toColumn: Dim_Date.Date
+
+relationship 28a1a040-a0a2-7497-ecfe-6aaf6260184d
+	fromColumn: Fact_Transaction.TransTypeCode
+	toColumn: Dim_TransType.TransTypeCode
+
+relationship c20a7dd2-478c-f6c6-6bd5-fd16e68ba861
+	fromColumn: Fact_Balance_Monthly.account_id
+	toColumn: Dim_Account.account_id
+
+relationship 50da5cdd-e0bb-051e-d424-2492b738f8e4
+	fromColumn: Fact_Balance_Monthly.MonthEndDate
+	toColumn: Dim_Date.Date
+

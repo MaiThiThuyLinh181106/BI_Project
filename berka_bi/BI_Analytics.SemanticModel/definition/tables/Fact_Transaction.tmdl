@@ -19,15 +19,6 @@ table Fact_Transaction
 
 		annotation SummarizationSetBy = Automatic
 
-	column date
-		dataType: int64
-		formatString: 0
-		lineageTag: 768fde1e-053d-46af-9a99-d0169df89e54
-		summarizeBy: sum
-		sourceColumn: date
-
-		annotation SummarizationSetBy = Automatic
-
 	column type
 		dataType: string
 		lineageTag: aa86d938-eae9-4db1-8308-9770dcbc3a8c
@@ -45,7 +36,7 @@ table Fact_Transaction
 		annotation SummarizationSetBy = Automatic
 
 	column amount
-		dataType: double
+		dataType: decimal
 		lineageTag: 510f17e4-94cf-40c9-bb98-1a22ad72edb0
 		summarizeBy: sum
 		sourceColumn: amount
@@ -55,7 +46,7 @@ table Fact_Transaction
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column balance
-		dataType: double
+		dataType: decimal
 		lineageTag: 0d9ec576-455a-43ac-9320-602d57680b8a
 		summarizeBy: sum
 		sourceColumn: balance
@@ -72,33 +63,88 @@ table Fact_Transaction
 
 		annotation SummarizationSetBy = Automatic
 
-	column bank
-		dataType: string
-		lineageTag: 35777c6f-5283-4a5a-b381-7fd89c87a1ec
+	column TransDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dc7c32bc-e391-4309-af42-6ea0da3a07f6
 		summarizeBy: none
-		sourceColumn: bank
+		sourceColumn: TransDate
 
 		annotation SummarizationSetBy = Automatic
 
-	column account
-		dataType: int64
-		formatString: 0
-		lineageTag: bab353cc-127a-44f4-bbb3-0d13e7550fd0
+		annotation UnderlyingDateTimeDataType = Date
+
+	column TransTypeCode
+		dataType: string
+		lineageTag: 6cc6da39-2abe-4a6d-a991-02e421196c5a
+		summarizeBy: none
+		sourceColumn: TransTypeCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column SignedAmount
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: c73dff07-d4a6-40d1-8893-93d22c661cd2
 		summarizeBy: sum
-		sourceColumn: account
+		sourceColumn: SignedAmount
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	partition Fact_Transaction = m
 		mode: import
 		queryGroup: Fact
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "trans.csv"),[Delimiter=";", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]),
-				    #"Promoted Headers1" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers1",{{"trans_id", Int64.Type}, {"account_id", Int64.Type}, {"date", Int64.Type}, {"type", type text}, {"operation", type text}, {"amount", type number}, {"balance", type number}, {"k_symbol", type text}, {"bank", type text}, {"account", Int64.Type}})
+				
+				    Source = Csv.Document(File.Contents(DataFolder & "trans.csv"), [Delimiter=";", Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				
+				    // xóa cột thừa (ngân hàng và tài khoản đối tác không dùng)
+				    RemovedColumns = Table.RemoveColumns(PromotedHeaders, {"bank", "account"}),
+				
+				    // làm sạch khoảng trắng ở các cột chữ
+				    TrimmedText = Table.TransformColumns(RemovedColumns, {
+				        {"type", Text.Trim, type text},
+				        {"operation", Text.Trim, type text},
+				        {"k_symbol", Text.Trim, type text}
+				    }),
+				
+				    // kiểu dữ liệu
+				    TypedColumns = Table.TransformColumnTypes(TrimmedText, {
+				        {"trans_id", Int64.Type},
+				        {"account_id", Int64.Type},
+				        {"date", Int64.Type},
+				        {"amount", Currency.Type},
+				        {"balance", Currency.Type}
+				    }, "en-US"),
+				
+				    // YYMMDD thành date
+				    AddTransDate = Table.AddColumn(TypedColumns, "TransDate", each
+				        #date(
+				            1900 + Number.IntegerDivide([date], 10000),
+				            Number.Mod(Number.IntegerDivide([date], 100), 100),
+				            Number.Mod([date], 100)
+				        ), type date),
+				    RemovedRawDate = Table.RemoveColumns(AddTransDate, {"date"}),
+				
+				    // xử lý lỗi ô trống
+				    CleanNulls = Table.ReplaceValue(RemovedRawDate, null, "", Replacer.ReplaceValue, {"type", "operation", "k_symbol"}),
+				
+				    // tiền âm, dương có dấu
+				    AddSignedAmount = Table.AddColumn(CleanNulls, "SignedAmount", each
+				        if [type] = "PRIJEM" then [amount] else -[amount], Currency.Type),
+				
+				    // mã loại giao dịch để nối với Dim_TransType
+				    AddTypeCode = Table.AddColumn(AddSignedAmount, "TransTypeCode", each
+				        [type] & "|" & [operation] & "|" & [k_symbol], type text),
+				
+				    Reordered = Table.ReorderColumns(AddTypeCode,
+				        {"trans_id", "account_id", "TransDate", "TransTypeCode", "type", "operation", "k_symbol", "amount", "SignedAmount", "balance"})
 				in
-				    #"Changed Type"
+				    Reordered
 
 	annotation PBI_NavigationStepName = Navigation
 
