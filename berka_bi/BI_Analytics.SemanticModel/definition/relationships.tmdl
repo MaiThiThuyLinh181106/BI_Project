@@ -41,3 +41,34 @@ relationship 50da5cdd-e0bb-051e-d424-2492b738f8e4
 	fromColumn: Fact_Balance_Monthly.MonthEndDate
 	toColumn: Dim_Date.Date
 
+relationship e3f21d54-ff30-44dd-81b2-8bf67048c95d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Fact_Card.CardIssuedDate
+	toColumn: LocalDateTable_61eb45e4-e997-4ba5-832d-d2523ba3c10b.Date
+
+relationship 2adf6817-5812-4833-857b-e7d79f158bdf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Fact_Loan.MaturityDate
+	toColumn: LocalDateTable_fd8fabc9-8109-4c6e-a80d-b944f345d951.Date
+
+relationship 79dc395b-3dfd-f47e-7689-b603b7943565
+	fromColumn: Fact_Loan.LoanDate
+	toColumn: Dim_Date.Date
+
+relationship 7efb1ea5-bc16-1fe4-f260-83bafe7f2863
+	fromColumn: Dim_Account.district_id
+	toColumn: Dim_District.district_id
+
+relationship 4797c957-cba1-4375-d8aa-cd36205999de
+	isActive: false
+	fromColumn: Dim_Client.district_id
+	toColumn: Dim_District.district_id
+
+relationship ccf1ebec-0452-1c4b-47b6-70426503c75e
+	fromColumn: Fact_Loan.status
+	toColumn: Dim_LoanStatus.status
+
+relationship 53211e75-0570-a776-15fe-2691d9283beb
+	fromColumn: Fact_Card.type
+	toColumn: Dim_CardType.type
+

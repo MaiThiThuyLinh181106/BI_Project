@@ -28,16 +28,62 @@ table Dim_Client
 
 		annotation SummarizationSetBy = Automatic
 
+	column Gender
+		dataType: string
+		lineageTag: 943aed93-3803-4484-b2eb-b16145eb82bc
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column BirthDate
+		dataType: string
+		lineageTag: 1f15c31a-e6c1-4002-a181-554ee5322649
+		summarizeBy: none
+		sourceColumn: BirthDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age
+		dataType: string
+		lineageTag: 95d1aa62-362e-496a-8989-9119373c2f91
+		summarizeBy: none
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroup
+		dataType: string
+		lineageTag: b7d1101a-6ce7-42fb-a2fb-a8143bbc4d75
+		summarizeBy: none
+		sourceColumn: AgeGroup
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Dim_Client = m
 		mode: import
 		queryGroup: Dimension
-		source =
+		source = ```
 				let
 				    Source = Csv.Document(File.Contents(DataFolder & "client.csv"),[Delimiter=";", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers1" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers1",{{"client_id", Int64.Type}, {"birth_number", Int64.Type}, {"district_id", Int64.Type}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers1",{{"client_id", Int64.Type}, {"birth_number", Int64.Type}, {"district_id", Int64.Type}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type", "Gender", each if Number.Mod(Number.IntegerDivide([birth_number], 100), 100) > 50 then "Nữ" else "Nam"),
+				    #"Added Custom1" = Table.AddColumn(#"Added Custom", "BirthDate", each #date(
+				    1900 + Number.IntegerDivide([birth_number], 10000),
+				    if Number.Mod(Number.IntegerDivide([birth_number], 100), 100) > 50 
+				        then Number.Mod(Number.IntegerDivide([birth_number], 100), 100) - 50 
+				        else Number.Mod(Number.IntegerDivide([birth_number], 100), 100),
+				    Number.Mod([birth_number], 100)
+				)),
+				    #"Added Custom2" = Table.AddColumn(#"Added Custom1", "Age", each 1998 - (1900 + Number.IntegerDivide([birth_number], 10000))),
+				    #"Added Custom3" = Table.AddColumn(#"Added Custom2", "AgeGroup", each if [Age] < 30 then "Dưới 30"
+				else if [Age] <= 45 then "30 - 45"
+				else if [Age] <= 60 then "46 - 60"
+				else "Trên 60")
 				in
-				    #"Changed Type"
+				    #"Added Custom3"
+				```
 
 	annotation PBI_NavigationStepName = Navigation
 

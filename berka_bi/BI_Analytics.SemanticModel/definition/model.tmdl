@@ -23,7 +23,7 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DevMode"]
 
-annotation PBI_QueryOrder = ["DataFolder","Fact_Transaction","Dim_Account","Fact_Card","Dim_Client","Bridge_Disp","Dim_District","Fact_Loan","Fact_Order","Dim_Date","Dim_TransType","Fact_Balance_Monthly"]
+annotation PBI_QueryOrder = ["DataFolder","Fact_Transaction","Dim_Account","Fact_Card","Dim_Client","Bridge_Disp","Dim_District","Fact_Loan","Fact_Order","Dim_Date","Dim_TransType","Fact_Balance_Monthly","Dim_LoanStatus","Dim_CardType"]
 
 ref table Fact_Transaction
 ref table Dim_Account
@@ -36,6 +36,11 @@ ref table Fact_Order
 ref table Dim_Date
 ref table Dim_TransType
 ref table Fact_Balance_Monthly
+ref table Dim_LoanStatus
+ref table Dim_CardType
+ref table DateTableTemplate_b6c75bbd-07ac-419a-bf66-07208fb2fbf6
+ref table LocalDateTable_61eb45e4-e997-4ba5-832d-d2523ba3c10b
+ref table LocalDateTable_fd8fabc9-8109-4c6e-a80d-b944f345d951
 
 ref cultureInfo en-US
 

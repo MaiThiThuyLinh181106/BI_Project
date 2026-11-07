@@ -19,17 +19,8 @@ table Fact_Loan
 
 		annotation SummarizationSetBy = Automatic
 
-	column date
-		dataType: int64
-		formatString: 0
-		lineageTag: f04ec1d1-5331-40a3-97d4-0b7cf7a14beb
-		summarizeBy: sum
-		sourceColumn: date
-
-		annotation SummarizationSetBy = Automatic
-
 	column amount
-		dataType: int64
+		dataType: decimal
 		formatString: 0
 		lineageTag: a4ebf3c0-1a99-41dc-8404-2aca593ec629
 		summarizeBy: sum
@@ -47,7 +38,7 @@ table Fact_Loan
 		annotation SummarizationSetBy = Automatic
 
 	column payments
-		dataType: int64
+		dataType: decimal
 		formatString: 0
 		lineageTag: 945f5d5a-bcda-4a0d-a049-f7cdd3b4db5f
 		summarizeBy: sum
@@ -63,16 +54,111 @@ table Fact_Loan
 
 		annotation SummarizationSetBy = Automatic
 
+	column LoanDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 84dcda36-2c19-4b62-b47f-844631575872
+		summarizeBy: none
+		sourceColumn: LoanDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MaturityDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: edf4a8b2-29af-4abd-ada5-5c33e1c2aa79
+		summarizeBy: none
+		sourceColumn: MaturityDate
+
+		variation Variation
+			isDefault
+			relationship: 2adf6817-5812-4833-857b-e7d79f158bdf
+			defaultHierarchy: LocalDateTable_fd8fabc9-8109-4c6e-a80d-b944f345d951.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DaysToLoan
+		dataType: int64
+		formatString: 0
+		lineageTag: 28dc64a5-7a9f-4454-bfb9-103add73a81d
+		summarizeBy: sum
+		sourceColumn: DaysToLoan
+
+		annotation SummarizationSetBy = Automatic
+
+	column EstimatedOutstandingBalance
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 1d1a7460-94a6-41a4-b172-3fd4c7fed4f8
+		summarizeBy: sum
+		sourceColumn: EstimatedOutstandingBalance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
 	partition Fact_Loan = m
 		mode: import
 		queryGroup: Fact
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "loan.csv"),[Delimiter=";", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(File.Contents(DataFolder & "loan.csv"), [Delimiter=";", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"loan_id", Int64.Type}, {"account_id", Int64.Type}, {"date", Int64.Type}, {"amount", Int64.Type}, {"duration", Int64.Type}, {"payments", Int64.Type}, {"status", type text}})
+				    #"Changed Type Base" = Table.TransformColumnTypes(#"Promoted Headers", {
+				        {"loan_id", Int64.Type},
+				        {"account_id", Int64.Type},
+				        {"date", Int64.Type},
+				        {"amount", Currency.Type},
+				        {"duration", Int64.Type},
+				        {"payments", Currency.Type},
+				        {"status", type text}
+				    }, "en-US"),
+				
+				    // 1. Chuyển date sang kiểu Date
+				    #"Added LoanDate" = Table.AddColumn(#"Changed Type Base", "LoanDate", each
+				        #date(
+				            1900 + Number.IntegerDivide([date], 10000),
+				            Number.Mod(Number.IntegerDivide([date], 100), 100),
+				            Number.Mod([date], 100)
+				        ), type date),
+				    #"Removed Date" = Table.RemoveColumns(#"Added LoanDate", {"date"}),
+				
+				    // 2. Ngày đáo hạn = LoanDate + duration (tháng)
+				    #"Added MaturityDate" = Table.AddColumn(#"Removed Date", "MaturityDate", each
+				        Date.AddMonths([LoanDate], [duration]), type date),
+				
+				    // 3. Số ngày từ lúc mở tài khoản đến lúc vay (DaysToLoan)
+				    #"Merged Account" = Table.NestedJoin(#"Added MaturityDate", {"account_id"}, Dim_Account, {"account_id"}, "Dim_Account", JoinKind.LeftOuter),
+				    #"Expanded Account" = Table.ExpandTableColumn(#"Merged Account", "Dim_Account", {"AccountOpenDate"}, {"AccountOpenDate"}),
+				    #"Added DaysToLoan" = Table.AddColumn(#"Expanded Account", "DaysToLoan", each
+				        Duration.Days([LoanDate] - [AccountOpenDate]), Int64.Type),
+				    #"Removed AccountOpenDate" = Table.RemoveColumns(#"Added DaysToLoan", {"AccountOpenDate"}),
+				
+				    // 4. Ước tính dư nợ tại 31/12/1998 (EstimatedOutstandingBalance)
+				    // - Nhóm A: đã tất toán đầy đủ -> dư nợ = 0
+				    // - Nhóm B: hợp đồng vỡ nợ -> dư nợ rủi ro bằng toàn bộ khoản vay [amount]
+				    // - Nhóm C & D: đang trả nợ -> lấy amount trừ đi số tiền đã trả góp đến 31/12/1998
+				    #"Added OutstandingBalance" = Table.AddColumn(#"Removed AccountOpenDate", "EstimatedOutstandingBalance", each
+				        if [status] = "A" then 0
+				        else if [status] = "B" then [amount]
+				        else
+				            let
+				                monthsPassed = (1998 - Date.Year([LoanDate])) * 12 + (12 - Date.Month([LoanDate])),
+				                effectiveMonths = List.Min({monthsPassed, [duration]}),
+				                paidAmount = effectiveMonths * [payments],
+				                remaining = [amount] - paidAmount
+				            in
+				                if remaining < 0 then 0 else remaining, Currency.Type),
+				
+				    #"Reordered Columns" = Table.ReorderColumns(#"Added OutstandingBalance", {
+				        "loan_id", "account_id", "LoanDate", "MaturityDate", "DaysToLoan", "amount", "duration", "payments", "status", "EstimatedOutstandingBalance"
+				    })
 				in
-				    #"Changed Type"
+				    #"Reordered Columns"
 
 	annotation PBI_NavigationStepName = Navigation
 

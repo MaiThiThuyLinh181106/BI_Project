@@ -36,15 +36,32 @@ table Bridge_Disp
 
 		annotation SummarizationSetBy = Automatic
 
+	column RoleName
+		dataType: string
+		lineageTag: b027120a-5cc2-4c27-a42e-9f43f60c9676
+		summarizeBy: none
+		sourceColumn: RoleName
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Bridge_Disp = m
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "disp.csv"),[Delimiter=";", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(File.Contents(DataFolder & "disp.csv"), [Delimiter=";", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"disp_id", Int64.Type}, {"client_id", Int64.Type}, {"account_id", Int64.Type}, {"type", type text}})
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {
+				        {"disp_id", Int64.Type},
+				        {"client_id", Int64.Type},
+				        {"account_id", Int64.Type},
+				        {"type", type text}
+				    }),
+				    #"Added RoleName" = Table.AddColumn(#"Changed Type", "RoleName", each
+				        if [type] = "OWNER" then "Chủ tài khoản"
+				        else if [type] = "DISPONENT" then "Người được ủy quyền"
+				        else [type], type text)
 				in
-				    #"Changed Type"
+				    #"Added RoleName"
 
 	annotation PBI_NavigationStepName = Navigation
 

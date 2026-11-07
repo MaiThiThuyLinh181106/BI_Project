@@ -1,0 +1,47 @@
+table Dim_CardType
+	lineageTag: 699279ac-f576-405d-bfa8-88ecc7f5d336
+
+	column type
+		dataType: string
+		lineageTag: ce4d749e-1783-4948-885e-714eead84765
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column CardTypeName
+		dataType: string
+		lineageTag: 3a90456e-6999-47ae-8267-f7fba2cb593c
+		summarizeBy: none
+		sourceColumn: CardTypeName
+
+		annotation SummarizationSetBy = Automatic
+
+	column MoTa
+		dataType: string
+		lineageTag: 9bc4c62c-84fa-4d44-b38f-b082536672fc
+		summarizeBy: none
+		sourceColumn: MoTa
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_CardType = m
+		mode: import
+		queryGroup: Dimension
+		source =
+				let
+				    Source = #table(
+				        type table [type = text, CardTypeName = text, MoTa = text],
+				        {
+				            {"junior", "Thẻ Junior", "Thẻ cho trẻ em / thanh thiếu niên"},
+				            {"classic", "Thẻ Classic", "Thẻ tiêu chuẩn"},
+				            {"gold", "Thẻ Gold", "Thẻ hạng sang / VIP"}
+				        }
+				    )
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -27,24 +27,54 @@ table Fact_Card
 
 		annotation SummarizationSetBy = Automatic
 
-	column issued
-		dataType: string
-		lineageTag: e52bcf52-0482-493d-a2e8-b985d595c008
+	column CardIssuedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4dee56da-298e-47b7-bec7-de79168c8522
 		summarizeBy: none
-		sourceColumn: issued
+		sourceColumn: CardIssuedDate
+
+		variation Variation
+			isDefault
+			relationship: e3f21d54-ff30-44dd-81b2-8bf67048c95d
+			defaultHierarchy: LocalDateTable_61eb45e4-e997-4ba5-832d-d2523ba3c10b.'Date Hierarchy'
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition Fact_Card = m
 		mode: import
 		queryGroup: Fact
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "card.csv"),[Delimiter=";", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
-				    #"Promoted Headers1" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers1",{{"card_id", Int64.Type}, {"disp_id", Int64.Type}, {"type", type text}, {"issued", type text}})
+				    Source = Csv.Document(File.Contents(DataFolder & "card.csv"), [Delimiter=";", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Trimmed Text" = Table.TransformColumns(#"Promoted Headers", {
+				        {"type", Text.Trim, type text},
+				        {"issued", Text.Trim, type text}
+				    }),
+				    #"Changed Type Base" = Table.TransformColumnTypes(#"Trimmed Text", {
+				        {"card_id", Int64.Type},
+				        {"disp_id", Int64.Type},
+				        {"type", type text},
+				        {"issued", type text}
+				    }),
+				
+				    // Cắt 6 ký tự đầu của chuỗi (bỏ phần giờ 00:00:00) rồi chuyển sang kiểu date
+				    #"Added IssuedDate" = Table.AddColumn(#"Changed Type Base", "CardIssuedDate", each
+				        let
+				            rawDateText = Text.Start([issued], 6),
+				            rawDateNum = Number.FromText(rawDateText),
+				            y = 1900 + Number.IntegerDivide(rawDateNum, 10000),
+				            m = Number.Mod(Number.IntegerDivide(rawDateNum, 100), 100),
+				            d = Number.Mod(rawDateNum, 100)
+				        in
+				            #date(y, m, d), type date),
+				    #"Removed Raw Issued" = Table.RemoveColumns(#"Added IssuedDate", {"issued"}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Removed Raw Issued", {"card_id", "disp_id", "CardIssuedDate", "type"})
 				in
-				    #"Changed Type"
+				    #"Reordered Columns"
 
 	annotation PBI_NavigationStepName = Navigation
 

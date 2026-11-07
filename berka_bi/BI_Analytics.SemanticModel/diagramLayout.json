@@ -4,8 +4,8 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 0,
-        "y": 30.422535748548913
+        "x": 19.829059271579762,
+        "y": 0
       },
       "nodes": [
         {
@@ -19,7 +19,7 @@
             "height": 176,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
@@ -32,7 +32,7 @@
             "height": 176,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 13
         },
         {
           "location": {
@@ -45,7 +45,7 @@
             "height": 152,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
@@ -58,12 +58,12 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 10
         },
         {
           "location": {
-            "x": 1323.4843022400464,
-            "y": 0
+            "x": 942.83717581216,
+            "y": 331.0744774047198
           },
           "nodeIndex": "Dim_District",
           "nodeLineageTag": "477aebb6-e742-464f-a165-53c72bbcbcb5",
@@ -71,12 +71,12 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 12
         },
         {
           "location": {
-            "x": 50,
-            "y": 497.48951577093965
+            "x": 1795.6654263157952,
+            "y": 635.58475233547517
           },
           "nodeIndex": "Fact_Card",
           "nodeLineageTag": "366ed058-dfbb-4303-b291-86122b2fdd10",
@@ -84,12 +84,12 @@
             "height": 176,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 3
         },
         {
           "location": {
-            "x": 794.21669660624366,
-            "y": 379.98063625322987
+            "x": 1484.3930693140846,
+            "y": 63.414816499406527
           },
           "nodeIndex": "Fact_Loan",
           "nodeLineageTag": "0a61b5a7-cf9b-45ea-8eff-f6910cadff8a",
@@ -97,7 +97,7 @@
             "height": 248,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 11
         },
         {
           "location": {
@@ -110,7 +110,7 @@
             "height": 224,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 4
         },
         {
           "location": {
@@ -123,7 +123,7 @@
             "height": 300,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 5
         },
         {
           "location": {
@@ -136,7 +136,7 @@
             "height": 296,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 6
         },
         {
           "location": {
@@ -149,11 +149,37 @@
             "height": 224,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1557.4843022400464,
+            "y": 377.97312646450791
+          },
+          "nodeIndex": "Dim_CardType",
+          "nodeLineageTag": "699279ac-f576-405d-bfa8-88ecc7f5d336",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1749.0667532647972,
+            "y": 109.6507848503297
+          },
+          "nodeIndex": "Dim_LoanStatus",
+          "nodeLineageTag": "17c32d40-dd65-41d8-aa74-9db1bdb38861",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 9
         }
       ],
       "name": "All tables",
-      "zoomValue": 71,
+      "zoomValue": 56.482759246767046,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,

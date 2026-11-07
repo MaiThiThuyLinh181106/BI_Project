@@ -1,0 +1,65 @@
+table Dim_LoanStatus
+	lineageTag: 17c32d40-dd65-41d8-aa74-9db1bdb38861
+
+	column status
+		dataType: string
+		lineageTag: 78649b12-94aa-47a1-9399-5d11e523801c
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatusDescription
+		dataType: string
+		lineageTag: 8e490b46-344b-4d53-8708-b7fff641ec1d
+		summarizeBy: none
+		sourceColumn: StatusDescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column ContractStatus
+		dataType: string
+		lineageTag: 28351785-fe6b-4210-9d8f-c45a60db7763
+		summarizeBy: none
+		sourceColumn: ContractStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column RiskCategory
+		dataType: string
+		lineageTag: 2a1691b5-c0ab-4070-8083-e54dfb3d9f9d
+		summarizeBy: none
+		sourceColumn: RiskCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsBadDebt
+		dataType: int64
+		formatString: 0
+		lineageTag: a8d85c89-1bbf-47d7-af01-d4ed54b3b512
+		summarizeBy: none
+		sourceColumn: IsBadDebt
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_LoanStatus = m
+		mode: import
+		queryGroup: Dimension
+		source =
+				let
+				    Source = #table(
+				        type table [status = text, StatusDescription = text, ContractStatus = text, RiskCategory = text, IsBadDebt = Int64.Type],
+				        {
+				            {"A", "Hợp đồng đã kết thúc, trả nợ đầy đủ", "Đã kết thúc", "Tốt", 0},
+				            {"B", "Hợp đồng đã kết thúc, vỡ nợ không trả hết", "Đã kết thúc", "Xấu", 1},
+				            {"C", "Đang chạy, trả nợ bình thường", "Đang hoạt động", "Tốt", 0},
+				            {"D", "Đang chạy, khách đang nợ quá hạn", "Đang hoạt động", "Xấu", 1}
+				        }
+				    )
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

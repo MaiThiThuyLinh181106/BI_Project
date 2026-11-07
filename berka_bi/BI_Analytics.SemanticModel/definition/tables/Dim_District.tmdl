@@ -1,158 +1,217 @@
 table Dim_District
 	lineageTag: 477aebb6-e742-464f-a165-53c72bbcbcb5
 
-	column A1
+	column district_id
 		dataType: int64
 		formatString: 0
 		lineageTag: 88cbbd76-3957-471c-a026-fcb3471cbb51
-		summarizeBy: sum
-		sourceColumn: A1
+		summarizeBy: none
+		sourceColumn: district_id
 
 		annotation SummarizationSetBy = Automatic
 
-	column A2
+	column district_name
 		dataType: string
 		lineageTag: 8248270b-f46a-4bd9-89a2-71a922cd4243
 		summarizeBy: none
-		sourceColumn: A2
+		sourceColumn: district_name
 
 		annotation SummarizationSetBy = Automatic
 
-	column A3
+	column region
 		dataType: string
 		lineageTag: 3fe310fc-bbf4-487d-9d80-4822ef78c2bc
 		summarizeBy: none
-		sourceColumn: A3
+		sourceColumn: region
 
 		annotation SummarizationSetBy = Automatic
 
-	column A4
+	column population
 		dataType: int64
 		formatString: 0
 		lineageTag: 4daf1d72-c3c6-4ad4-b806-2a4193064c30
-		summarizeBy: sum
-		sourceColumn: A4
+		summarizeBy: none
+		sourceColumn: population
 
 		annotation SummarizationSetBy = Automatic
 
-	column A5
+	column num_munip_lt_500
 		dataType: int64
 		formatString: 0
 		lineageTag: 130d0aa9-5069-4ba1-befb-7ea9269bb55d
-		summarizeBy: sum
-		sourceColumn: A5
+		summarizeBy: none
+		sourceColumn: num_munip_lt_500
 
 		annotation SummarizationSetBy = Automatic
 
-	column A6
+	column num_munip_500_1999
 		dataType: int64
 		formatString: 0
 		lineageTag: 84d7c30d-a8a2-4071-8543-2fc0097a0406
-		summarizeBy: sum
-		sourceColumn: A6
+		summarizeBy: none
+		sourceColumn: num_munip_500_1999
 
 		annotation SummarizationSetBy = Automatic
 
-	column A7
+	column num_munip_2000_9999
 		dataType: int64
 		formatString: 0
 		lineageTag: 0085b74a-4e1a-4d91-b875-35b4c29b5f07
-		summarizeBy: sum
-		sourceColumn: A7
+		summarizeBy: none
+		sourceColumn: num_munip_2000_9999
 
 		annotation SummarizationSetBy = Automatic
 
-	column A8
+	column num_munip_gt_10000
 		dataType: int64
 		formatString: 0
 		lineageTag: 38eef909-5145-4c66-b08d-6dc07fddc607
-		summarizeBy: sum
-		sourceColumn: A8
+		summarizeBy: none
+		sourceColumn: num_munip_gt_10000
 
 		annotation SummarizationSetBy = Automatic
 
-	column A9
+	column num_cities
 		dataType: int64
 		formatString: 0
 		lineageTag: f01f8bd5-1756-49a7-92dd-0d2aa630320a
-		summarizeBy: sum
-		sourceColumn: A9
+		summarizeBy: none
+		sourceColumn: num_cities
 
 		annotation SummarizationSetBy = Automatic
 
-	column A10
+	column ratio_urban_inhabitants
 		dataType: double
 		lineageTag: b043d3ab-37ca-4a46-bf84-0da8fd2b12ee
-		summarizeBy: sum
-		sourceColumn: A10
+		summarizeBy: none
+		sourceColumn: ratio_urban_inhabitants
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	column A11
+	column average_salary
 		dataType: int64
 		formatString: 0
 		lineageTag: 21171c97-22b5-46f2-852c-54d10758090d
-		summarizeBy: sum
-		sourceColumn: A11
+		summarizeBy: none
+		sourceColumn: average_salary
 
 		annotation SummarizationSetBy = Automatic
 
-	column A12
-		dataType: string
+	column unemploy_rate_95
+		dataType: double
 		lineageTag: 32a17d9f-04c9-4b76-91fb-6ea5b256781a
 		summarizeBy: none
-		sourceColumn: A12
-
-		annotation SummarizationSetBy = Automatic
-
-	column A13
-		dataType: double
-		lineageTag: c2226b36-eadd-4e81-ab43-032749585988
-		summarizeBy: sum
-		sourceColumn: A13
+		sourceColumn: unemploy_rate_95
 
 		annotation SummarizationSetBy = Automatic
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	column A14
+	column unemploy_rate_96
+		dataType: double
+		lineageTag: c2226b36-eadd-4e81-ab43-032749585988
+		summarizeBy: none
+		sourceColumn: unemploy_rate_96
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column num_entrep_per_1000
 		dataType: int64
 		formatString: 0
 		lineageTag: e03afff5-3b1e-42f5-ae18-825ac9a75faf
-		summarizeBy: sum
-		sourceColumn: A14
+		summarizeBy: none
+		sourceColumn: num_entrep_per_1000
 
 		annotation SummarizationSetBy = Automatic
 
-	column A15
-		dataType: string
+	column num_crimes_95
+		dataType: int64
+		formatString: 0
 		lineageTag: 2d3d8a33-23b6-4bbe-b779-82e990dcbbf3
 		summarizeBy: none
-		sourceColumn: A15
+		sourceColumn: num_crimes_95
 
 		annotation SummarizationSetBy = Automatic
 
-	column A16
+	column num_crimes_96
 		dataType: int64
 		formatString: 0
 		lineageTag: 26d78a65-e17b-435a-b041-ee71028c699b
-		summarizeBy: sum
-		sourceColumn: A16
+		summarizeBy: none
+		sourceColumn: num_crimes_96
 
 		annotation SummarizationSetBy = Automatic
 
 	partition Dim_District = m
 		mode: import
 		queryGroup: Dimension
-		source =
+		source = ```
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "district.csv"),[Delimiter=";", Columns=16, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(File.Contents(DataFolder & "district.csv"), [Delimiter=";", Columns=16, Encoding=1252, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"A1", Int64.Type}, {"A2", type text}, {"A3", type text}, {"A4", Int64.Type}, {"A5", Int64.Type}, {"A6", Int64.Type}, {"A7", Int64.Type}, {"A8", Int64.Type}, {"A9", Int64.Type}, {"A10", type number}, {"A11", Int64.Type}, {"A12", type text}, {"A13", type number}, {"A14", Int64.Type}, {"A15", type text}, {"A16", Int64.Type}})
+				    
+				    // Đổi tên các cột A1 - A16 theo quy chuẩn
+				    #"Renamed Columns" = Table.RenameColumns(#"Promoted Headers", {
+				        {"A1", "district_id"},
+				        {"A2", "district_name"},
+				        {"A3", "region"},
+				        {"A4", "population"},
+				        {"A5", "num_munip_lt_500"},
+				        {"A6", "num_munip_500_1999"},
+				        {"A7", "num_munip_2000_9999"},
+				        {"A8", "num_munip_gt_10000"},
+				        {"A9", "num_cities"},
+				        {"A10", "ratio_urban_inhabitants"},
+				        {"A11", "average_salary"},
+				        {"A12", "unemploy_rate_95"},
+				        {"A13", "unemploy_rate_96"},
+				        {"A14", "num_entrep_per_1000"},
+				        {"A15", "num_crimes_95"},
+				        {"A16", "num_crimes_96"}
+				    }),
+				
+				    // Xử lý giá trị "?" năm 1995 bằng cách lấy giá trị năm 1996 của huyện đó
+				    #"Replaced Missing Unemploy95" = Table.ReplaceValue(
+				        #"Renamed Columns",
+				        each [unemploy_rate_95],
+				        each if [unemploy_rate_95] = "?" or [unemploy_rate_95] = null or [unemploy_rate_95] = "" then [unemploy_rate_96] else [unemploy_rate_95],
+				        Replacer.ReplaceValue,
+				        {"unemploy_rate_95"}
+				    ),
+				    #"Replaced Missing Crimes95" = Table.ReplaceValue(
+				        #"Replaced Missing Unemploy95",
+				        each [num_crimes_95],
+				        each if [num_crimes_95] = "?" or [num_crimes_95] = null or [num_crimes_95] = "" then [num_crimes_96] else [num_crimes_95],
+				        Replacer.ReplaceValue,
+				        {"num_crimes_95"}
+				    ),
+				
+				    // Chuyển kiểu dữ liệu chuẩn
+				    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Missing Crimes95", {
+				        {"district_id", Int64.Type},
+				        {"district_name", type text},
+				        {"region", type text},
+				        {"population", Int64.Type},
+				        {"num_munip_lt_500", Int64.Type},
+				        {"num_munip_500_1999", Int64.Type},
+				        {"num_munip_2000_9999", Int64.Type},
+				        {"num_munip_gt_10000", Int64.Type},
+				        {"num_cities", Int64.Type},
+				        {"ratio_urban_inhabitants", type number},
+				        {"average_salary", Int64.Type},
+				        {"unemploy_rate_95", type number},
+				        {"unemploy_rate_96", type number},
+				        {"num_entrep_per_1000", Int64.Type},
+				        {"num_crimes_95", Int64.Type},
+				        {"num_crimes_96", Int64.Type}
+				    }, "en-US")
 				in
 				    #"Changed Type"
+				```
 
 	annotation PBI_NavigationStepName = Navigation
 
