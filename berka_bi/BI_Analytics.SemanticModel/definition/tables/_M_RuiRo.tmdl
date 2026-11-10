@@ -2,24 +2,24 @@ table _M_RuiRo
 	lineageTag: 3dcd7fa8-766c-4a48-a58d-b90fdfbfb4e3
 
 	measure 'Total Loans' = COUNTROWS(Fact_Loan)
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		formatString: #,0
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: dc9a49f7-c2b6-42f8-90bc-e5438218bd9c
 
 	measure 'Total Loan Amount' = SUM(Fact_Loan[amount])
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: c48371fb-e3a5-4e2e-b095-732329687dcc
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
 	measure 'Average Loan Amount' = DIVIDE([Total Loan Amount], [Total Loans], 0)
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: cf08c6b4-5b7f-4b2d-9627-94e3661d8d80
 
 	measure 'Average Monthly Payment' = AVERAGE(Fact_Loan[payments])
-		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: 7b8e11c5-61db-400d-a9a5-0369fe3349ec
 
