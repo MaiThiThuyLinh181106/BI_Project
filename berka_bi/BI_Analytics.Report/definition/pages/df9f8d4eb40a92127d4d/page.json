@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "df9f8d4eb40a92127d4d",
+  "displayName": "7 Phân khúc & chấm điểm",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920
+}

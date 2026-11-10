@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "40582730b3a5be0d6116",
+  "displayName": "2 Giao dịch & thanh khoản",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920
+}

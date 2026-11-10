@@ -1,0 +1,30 @@
+table _M_TaiChinh
+	lineageTag: a27a95cd-42f3-4d4c-b37f-a7f50cff920f
+
+	measure 'Số giao dịch' = COUNTROWS(Fact_Transaction)
+		formatString: #,0
+		displayFolder: 2 Giao dịch
+		lineageTag: b217347b-cd6f-45e3-b907-1fcd592e3e20
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: 6d891279-0d6b-42f9-95ce-607d21438524
+		summarizeBy: none
+		sourceColumn: Column1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _M_TaiChinh = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
