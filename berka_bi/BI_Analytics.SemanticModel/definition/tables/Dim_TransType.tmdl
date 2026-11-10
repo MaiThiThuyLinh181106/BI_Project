@@ -43,9 +43,12 @@ table Dim_TransType
 
 	column OperationName
 		dataType: string
+		isHidden
 		lineageTag: 81e0dafe-b9ff-42f8-85a1-07c99ce75d19
 		summarizeBy: none
 		sourceColumn: OperationName
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
