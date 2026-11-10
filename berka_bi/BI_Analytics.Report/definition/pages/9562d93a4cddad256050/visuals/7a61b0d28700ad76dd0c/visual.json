@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Dim_Client"
+                      "Entity": "Dim_Account"
                     }
                   },
-                  "Property": "Gender"
+                  "Property": "OwnerGender"
                 }
               },
-              "queryRef": "Dim_Client.Gender",
-              "nativeQueryRef": "Gender",
+              "queryRef": "Dim_Account.OwnerGender",
+              "nativeQueryRef": "OwnerGender",
               "active": true
             }
           ]

@@ -40,6 +40,60 @@ table Dim_Account
 
 		annotation UnderlyingDateTimeDataType = Date
 
+	column OwnerClientId = CALCULATE ( MAX ( Bridge_Disp[client_id] ), Bridge_Disp[type] = "OWNER" )
+		isHidden
+		formatString: 0
+		lineageTag: 6ce2a172-349f-4122-8a8b-1c78d8593924
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OwnerGender = LOOKUPVALUE ( Dim_Client[Gender], Dim_Client[client_id], Dim_Account[OwnerClientId] )
+		lineageTag: 8249625c-8f03-45c6-8f3a-7388cdff08ee
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column OwnerAge = LOOKUPVALUE ( Dim_Client[Age], Dim_Client[client_id], Dim_Account[OwnerClientId] )
+		formatString: 0
+		lineageTag: ff940053-d3fd-48e6-a1b9-2e26bcfbe9f5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column OwnerAgeGroup = LOOKUPVALUE ( Dim_Client[AgeGroup], Dim_Client[client_id], Dim_Account[OwnerClientId] )
+		lineageTag: 30af2bb7-572a-46f7-b0d2-7b1ed58aafb3
+		summarizeBy: none
+		sortByColumn: OwnerAgeGroupOrder
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column OwnerAgeGroupOrder = LOOKUPVALUE ( Dim_Client[AgeGroupOrder], Dim_Client[client_id], Dim_Account[OwnerClientId] )
+		isHidden
+		formatString: 0
+		lineageTag: 98dbc786-548d-4ebd-a9c5-28dfcc286740
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CardStatus = IF ( CALCULATE ( COUNTROWS ( Fact_Card ) ) > 0, "Có thẻ", "Chưa có thẻ" )
+		lineageTag: fc95c721-01d4-42c6-84c6-51a9add939a1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column PensionStatus = IF ( CALCULATE ( COUNTROWS ( Fact_Transaction ), Dim_TransType[k_symbol] = "DUCHOD" ) > 0, "Nhận lương hưu", "Không nhận lương hưu" )
+		lineageTag: f9e0658d-600f-495c-aac7-2e51883583f2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Dim_Account = m
 		mode: import
 		queryGroup: Dimension
