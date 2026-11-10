@@ -5,10 +5,10 @@ table Fact_Transaction
 		dataType: int64
 		formatString: 0
 		lineageTag: 37f67bd3-6bbb-44fb-84ff-06c674d78303
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: trans_id
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column account_id
 		dataType: int64
@@ -21,17 +21,23 @@ table Fact_Transaction
 
 	column type
 		dataType: string
+		isHidden
 		lineageTag: aa86d938-eae9-4db1-8308-9770dcbc3a8c
 		summarizeBy: none
 		sourceColumn: type
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
 	column operation
 		dataType: string
+		isHidden
 		lineageTag: fc9e5964-882b-4649-8230-27c003738fd2
 		summarizeBy: none
 		sourceColumn: operation
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -57,9 +63,12 @@ table Fact_Transaction
 
 	column k_symbol
 		dataType: string
+		isHidden
 		lineageTag: bce48038-0864-41fa-a93e-f5c735b5d758
 		summarizeBy: none
 		sourceColumn: k_symbol
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 
@@ -76,9 +85,12 @@ table Fact_Transaction
 
 	column TransTypeCode
 		dataType: string
+		isHidden
 		lineageTag: 6cc6da39-2abe-4a6d-a991-02e421196c5a
 		summarizeBy: none
 		sourceColumn: TransTypeCode
+
+		changedProperty = IsHidden
 
 		annotation SummarizationSetBy = Automatic
 

@@ -28,12 +28,17 @@ table Dim_Account
 		annotation SummarizationSetBy = Automatic
 
 	column AccountOpenDate
-		dataType: string
+		dataType: dateTime
+		formatString: Long Date
 		lineageTag: e4f65f24-e188-4598-bbc8-6a7979cf5776
 		summarizeBy: none
 		sourceColumn: AccountOpenDate
 
+		changedProperty = DataType
+
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition Dim_Account = m
 		mode: import
@@ -59,9 +64,10 @@ table Dim_Account
 				    #"Removed Columns1" = Table.RemoveColumns(#"Added Custom1",{"date"}),
 				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns1","POPLATEK MESICNE","Sao kê hàng tháng",Replacer.ReplaceText,{"frequency"}),
 				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","POPLATEK TYDNE","Sao kê hàng tuần ",Replacer.ReplaceText,{"frequency"}),
-				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","POPLATEK PO OBRATU","Sao kê sau mỗi giao dịch ",Replacer.ReplaceText,{"frequency"})
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","POPLATEK PO OBRATU","Sao kê sau mỗi giao dịch ",Replacer.ReplaceText,{"frequency"}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Replaced Value2",{{"frequency", Text.Trim, type text}})
 				in
-				    #"Replaced Value2"
+				    #"Trimmed Text"
 
 	annotation PBI_NavigationStepName = Navigation
 

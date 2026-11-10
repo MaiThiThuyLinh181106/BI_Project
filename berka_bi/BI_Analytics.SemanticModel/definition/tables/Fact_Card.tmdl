@@ -5,10 +5,10 @@ table Fact_Card
 		dataType: int64
 		formatString: 0
 		lineageTag: f103c044-cc8a-4bd5-a12b-7d745f8e113f
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: card_id
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column disp_id
 		dataType: int64

@@ -46,6 +46,7 @@ table Bridge_Disp
 
 	partition Bridge_Disp = m
 		mode: import
+		queryGroup: Dimension
 		source =
 				let
 				    Source = Csv.Document(File.Contents(DataFolder & "disp.csv"), [Delimiter=";", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),

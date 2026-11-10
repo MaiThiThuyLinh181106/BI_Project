@@ -32,10 +32,10 @@ table Fact_Loan
 		dataType: int64
 		formatString: 0
 		lineageTag: 1749afd5-c750-47f5-b41d-0c5ce696bb4c
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: duration
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column payments
 		dataType: decimal
@@ -80,10 +80,10 @@ table Fact_Loan
 		dataType: int64
 		formatString: 0
 		lineageTag: 28dc64a5-7a9f-4454-bfb9-103add73a81d
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: DaysToLoan
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column EstimatedOutstandingBalance
 		dataType: decimal

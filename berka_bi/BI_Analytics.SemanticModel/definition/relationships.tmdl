@@ -7,7 +7,6 @@ relationship AutoDetected_20b0c7a4-f95d-40e0-b5c0-16bfcae73e77
 	toColumn: Dim_Account.account_id
 
 relationship AutoDetected_9e84eaef-9275-4e90-9575-39943c93ad9b
-	crossFilteringBehavior: bothDirections
 	fromColumn: Fact_Loan.account_id
 	toColumn: Dim_Account.account_id
 
@@ -16,12 +15,10 @@ relationship AutoDetected_84fdc95a-7966-4087-91fd-a89b979774bc
 	toColumn: Dim_Account.account_id
 
 relationship AutoDetected_4b61d7bc-284b-4647-8e9a-eab4f9c6f4f9
-	crossFilteringBehavior: bothDirections
 	fromColumn: Fact_Card.disp_id
 	toColumn: Bridge_Disp.disp_id
 
 relationship AutoDetected_b8ba5d1a-8b4e-4038-a60b-8a7a00eb7030
-	crossFilteringBehavior: bothDirections
 	fromColumn: Bridge_Disp.client_id
 	toColumn: Dim_Client.client_id
 
@@ -61,4 +58,8 @@ relationship ccf1ebec-0452-1c4b-47b6-70426503c75e
 relationship 53211e75-0570-a776-15fe-2691d9283beb
 	fromColumn: Fact_Card.type
 	toColumn: Dim_CardType.type
+
+relationship cbf0f567-3bbd-e48b-4dcf-bc46231fc8a8
+	fromColumn: Fact_Card.CardIssuedDate
+	toColumn: Dim_Date.Date
 
