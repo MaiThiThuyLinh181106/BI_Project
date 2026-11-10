@@ -72,11 +72,6 @@ table Fact_Loan
 		summarizeBy: none
 		sourceColumn: MaturityDate
 
-		variation Variation
-			isDefault
-			relationship: 2adf6817-5812-4833-857b-e7d79f158bdf
-			defaultHierarchy: LocalDateTable_fd8fabc9-8109-4c6e-a80d-b944f345d951.'Date Hierarchy'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date

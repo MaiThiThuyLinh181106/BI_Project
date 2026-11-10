@@ -34,11 +34,6 @@ table Fact_Card
 		summarizeBy: none
 		sourceColumn: CardIssuedDate
 
-		variation Variation
-			isDefault
-			relationship: e3f21d54-ff30-44dd-81b2-8bf67048c95d
-			defaultHierarchy: LocalDateTable_61eb45e4-e997-4ba5-832d-d2523ba3c10b.'Date Hierarchy'
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date

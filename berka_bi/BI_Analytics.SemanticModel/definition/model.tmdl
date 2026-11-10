@@ -19,7 +19,7 @@ queryGroup Dimension
 
 	annotation PBI_QueryGroupOrder = 2
 
-annotation __PBI_TimeIntelligenceEnabled = 1
+annotation __PBI_TimeIntelligenceEnabled = 0
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -38,9 +38,6 @@ ref table Dim_TransType
 ref table Fact_Balance_Monthly
 ref table Dim_LoanStatus
 ref table Dim_CardType
-ref table DateTableTemplate_b6c75bbd-07ac-419a-bf66-07208fb2fbf6
-ref table LocalDateTable_61eb45e4-e997-4ba5-832d-d2523ba3c10b
-ref table LocalDateTable_fd8fabc9-8109-4c6e-a80d-b944f345d951
 
 ref cultureInfo en-US
 

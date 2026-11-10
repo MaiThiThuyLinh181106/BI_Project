@@ -41,16 +41,6 @@ relationship 50da5cdd-e0bb-051e-d424-2492b738f8e4
 	fromColumn: Fact_Balance_Monthly.MonthEndDate
 	toColumn: Dim_Date.Date
 
-relationship e3f21d54-ff30-44dd-81b2-8bf67048c95d
-	joinOnDateBehavior: datePartOnly
-	fromColumn: Fact_Card.CardIssuedDate
-	toColumn: LocalDateTable_61eb45e4-e997-4ba5-832d-d2523ba3c10b.Date
-
-relationship 2adf6817-5812-4833-857b-e7d79f158bdf
-	joinOnDateBehavior: datePartOnly
-	fromColumn: Fact_Loan.MaturityDate
-	toColumn: LocalDateTable_fd8fabc9-8109-4c6e-a80d-b944f345d951.Date
-
 relationship 79dc395b-3dfd-f47e-7689-b603b7943565
 	fromColumn: Fact_Loan.LoanDate
 	toColumn: Dim_Date.Date
