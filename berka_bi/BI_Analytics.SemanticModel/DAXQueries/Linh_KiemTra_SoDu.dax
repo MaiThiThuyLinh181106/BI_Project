@@ -1,0 +1,37 @@
+EVALUATE
+VAR T =
+    ADDCOLUMNS (
+        VALUES ( Dim_Account[account_id] ),
+        "CongDonTienCoDau", CALCULATE ( SUM ( Fact_Transaction[SignedAmount] ) ),
+        "SoDuCuoiCung",
+            CALCULATE (
+                LASTNONBLANKVALUE (
+                    Fact_Balance_Monthly[MonthEndDate],
+                    SUM ( Fact_Balance_Monthly[EndBalance] )
+                )
+            )
+    )
+VAR T2 = ADDCOLUMNS ( T, "Lech", [SoDuCuoiCung] - [CongDonTienCoDau] )
+RETURN
+    ROW (
+        "Tổng số TK", COUNTROWS ( T2 ),
+        "Số TK lệch", COUNTROWS ( FILTER ( T2, ABS ( [Lech] ) > 1 ) ),
+        "Tổng lệch", SUMX ( T2, [Lech] )
+    )
+
+EVALUATE
+VAR T =
+    ADDCOLUMNS (
+        VALUES ( Dim_Account[account_id] ),
+        "CongDonTienCoDau", CALCULATE ( SUM ( Fact_Transaction[SignedAmount] ) ),
+        "SoDuCuoiCung",
+            CALCULATE (
+                LASTNONBLANKVALUE (
+                    Fact_Balance_Monthly[MonthEndDate],
+                    SUM ( Fact_Balance_Monthly[EndBalance] )
+                )
+            )
+    )
+VAR T2 = ADDCOLUMNS ( T, "Lech", [SoDuCuoiCung] - [CongDonTienCoDau] )
+RETURN
+    TOPN ( 10, FILTER ( T2, ABS ( [Lech] ) > 1 ), ABS ( [Lech] ), DESC )

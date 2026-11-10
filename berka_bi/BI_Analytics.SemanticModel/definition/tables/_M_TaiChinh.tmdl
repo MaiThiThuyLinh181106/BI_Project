@@ -6,6 +6,181 @@ table _M_TaiChinh
 		displayFolder: 2 Giao dịch
 		lineageTag: b217347b-cd6f-45e3-b907-1fcd592e3e20
 
+	measure 'Tổng tiền vào' = ```
+			
+			        CALCULATE ( SUM ( Fact_Transaction[amount] ), Dim_TransType[Direction] = "Tiền vào" )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 0d684a73-e951-4449-be72-406cafa81c3e
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Tổng tiền ra' = ```
+			
+			        CALCULATE ( SUM ( Fact_Transaction[amount] ), Dim_TransType[Direction] = "Tiền ra" )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 83c801fd-aaf6-4ad4-b764-e6e0bbdc5870
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Dòng tiền ròng' = [Tổng tiền vào] - [Tổng tiền ra]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 5cb2852b-5c35-49b2-b1d3-07914a035a43
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Tiền vào tháng trước' = ```
+			
+			        CALCULATE ( [Tổng tiền vào], DATEADD ( Dim_Date[Date], -1, MONTH ) )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 102176f9-a0be-4c44-9037-f7c1bbbfe95d
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Tăng trưởng tiền vào MoM %' = ```
+			
+			        VAR Prev = [Tiền vào tháng trước]
+			        RETURN DIVIDE ( [Tổng tiền vào] - Prev, Prev )
+			```
+		lineageTag: 9ce6576d-dd35-4cef-b96c-cfed776a7d5e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tiền vào YTD' = ```
+			
+			        TOTALYTD ( [Tổng tiền vào], Dim_Date[Date] )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 1a521e5b-c217-4149-8361-5c43cc9868cf
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Dòng tiền ròng YTD' = ```
+			
+			        TOTALYTD ( [Dòng tiền ròng], Dim_Date[Date] )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 8aaede4e-f247-41b9-b52e-4fa42f78bb7f
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Tổng số dư tiền gửi' = ```
+			
+			        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+			        RETURN
+			            CALCULATE (
+			                SUM ( Fact_Transaction[SignedAmount] ),
+			                REMOVEFILTERS ( Dim_Date ),
+			                Fact_Transaction[TransDate] <= PeriodEnd
+			            )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 2070b852-b587-44ed-83de-698681126af2
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Số tài khoản cuối kỳ' = ```
+			
+			        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+			        RETURN
+			            CALCULATE (
+			                DISTINCTCOUNT ( Fact_Transaction[account_id] ),
+			                REMOVEFILTERS ( Dim_Date ),
+			                Fact_Transaction[TransDate] <= PeriodEnd
+			            )
+			```
+		formatString: 0
+		lineageTag: 58b5dc1b-257a-4ea3-ad99-d84e36267167
+
+	measure 'Số dư bình quân / tài khoản' = ```
+			
+			        DIVIDE ( [Tổng số dư tiền gửi], [Số tài khoản cuối kỳ] )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 37999e86-180f-450c-a74d-bcf826901c3c
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Tổng số dư cùng kỳ năm trước' = ```
+			
+			        CALCULATE ( [Tổng số dư tiền gửi], SAMEPERIODLASTYEAR ( Dim_Date[Date] ) )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 2e27b66d-6f60-4c99-be43-a5b1685e4c84
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Tăng trưởng số dư YoY %' = ```
+			
+			        VAR Prev = [Tổng số dư cùng kỳ năm trước]
+			        RETURN DIVIDE ( [Tổng số dư tiền gửi] - Prev, Prev )
+			```
+		lineageTag: 6baf3d6d-582d-4016-b260-4f3189fd6c4f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dư nợ cho vay cuối kỳ' = ```
+			
+			        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+			        RETURN
+			            CALCULATE (
+			                SUMX (
+			                    FILTER ( Fact_Loan, Fact_Loan[LoanDate] <= PeriodEnd ),
+			                    VAR MonthsPaid =
+			                        MIN ( DATEDIFF ( Fact_Loan[LoanDate], PeriodEnd, MONTH ), Fact_Loan[duration] )
+			                    RETURN
+			                        MAX ( Fact_Loan[amount] - MonthsPaid * Fact_Loan[payments], 0 )
+			                ),
+			                REMOVEFILTERS ( Dim_Date )
+			            )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 1e025d79-2cfb-48f4-9d0f-77b2af892e0c
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure LDR = ```
+			
+			        DIVIDE ( [Dư nợ cho vay cuối kỳ], [Tổng số dư tiền gửi] )
+			```
+		lineageTag: 0bf96cf4-d4f2-4c98-9f71-acd400c909c6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ngưỡng LDR' = 0.85
+		lineageTag: d6b93a95-aa36-4bef-9a9b-2cbad8c72c8d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Thu nhập phí' = ```
+			
+			        CALCULATE ( SUM ( Fact_Transaction[amount] ), Dim_TransType[IsFeeIncome] = TRUE () )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 087ba5e2-83c0-4797-9f55-376fafad2326
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Chi phí lãi trả khách' = ```
+			
+			        CALCULATE ( SUM ( Fact_Transaction[amount] ), Dim_TransType[k_symbol] = "UROK" )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: f363caf6-f247-44cf-8511-d139be81d13c
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Chênh lệch phí - lãi' = ```
+			
+			        [Thu nhập phí] - [Chi phí lãi trả khách]
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: b53a27e1-3145-49ad-a26e-f249224f5ece
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
 	column Column1
 		dataType: string
 		isHidden

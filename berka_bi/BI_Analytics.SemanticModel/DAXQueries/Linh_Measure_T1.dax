@@ -1,0 +1,117 @@
+DEFINE
+    // NHÓM 1: DÒNG TIỀN
+
+    // K07
+    MEASURE '_M_TaiChinh'[Tổng tiền vào] =
+        CALCULATE ( SUM ( Fact_Transaction[amount] ), Dim_TransType[Direction] = "Tiền vào" )
+
+    // K08
+    MEASURE '_M_TaiChinh'[Tổng tiền ra] =
+        CALCULATE ( SUM ( Fact_Transaction[amount] ), Dim_TransType[Direction] = "Tiền ra" )
+
+    // K09
+    MEASURE '_M_TaiChinh'[Dòng tiền ròng] = [Tổng tiền vào] - [Tổng tiền ra]
+
+    // NHÓM 2: TIME INTELLIGENCE
+
+    MEASURE '_M_TaiChinh'[Tiền vào tháng trước] =
+        CALCULATE ( [Tổng tiền vào], DATEADD ( Dim_Date[Date], -1, MONTH ) )
+
+    MEASURE '_M_TaiChinh'[Tăng trưởng tiền vào MoM %] =
+        VAR Prev = [Tiền vào tháng trước]
+        RETURN DIVIDE ( [Tổng tiền vào] - Prev, Prev )
+
+    MEASURE '_M_TaiChinh'[Tiền vào YTD] =
+        TOTALYTD ( [Tổng tiền vào], Dim_Date[Date] )
+
+    MEASURE '_M_TaiChinh'[Dòng tiền ròng YTD] =
+        TOTALYTD ( [Dòng tiền ròng], Dim_Date[Date] )
+
+    // NHÓM 3: SỐ DƯ
+
+        // K01: số dư = cộng dồn tiền có dấu từ đầu đến cuối kỳ đang chọn
+    MEASURE '_M_TaiChinh'[Tổng số dư tiền gửi] =
+        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+        RETURN
+            CALCULATE (
+                SUM ( Fact_Transaction[SignedAmount] ),
+                REMOVEFILTERS ( Dim_Date ),
+                Fact_Transaction[TransDate] <= PeriodEnd
+            )
+
+    // Số tài khoản đã có giao dịch tính đến cuối kỳ
+    MEASURE '_M_TaiChinh'[Số tài khoản cuối kỳ] =
+        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+        RETURN
+            CALCULATE (
+                DISTINCTCOUNT ( Fact_Transaction[account_id] ),
+                REMOVEFILTERS ( Dim_Date ),
+                Fact_Transaction[TransDate] <= PeriodEnd
+            )
+    // K17
+    MEASURE '_M_TaiChinh'[Số dư bình quân / tài khoản] =
+        DIVIDE ( [Tổng số dư tiền gửi], [Số tài khoản cuối kỳ] )
+
+    MEASURE '_M_TaiChinh'[Tổng số dư cùng kỳ năm trước] =
+        CALCULATE ( [Tổng số dư tiền gửi], SAMEPERIODLASTYEAR ( Dim_Date[Date] ) )
+
+    // K02
+    MEASURE '_M_TaiChinh'[Tăng trưởng số dư YoY %] =
+        VAR Prev = [Tổng số dư cùng kỳ năm trước]
+        RETURN DIVIDE ( [Tổng số dư tiền gửi] - Prev, Prev )
+
+    // NHÓM 4: LDR
+
+    // Dư nợ theo lịch trả nợ tại ngày cuối của kỳ đang chọn
+    MEASURE '_M_TaiChinh'[Dư nợ cho vay cuối kỳ] =
+        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+        RETURN
+            CALCULATE (
+                SUMX (
+                    FILTER ( Fact_Loan, Fact_Loan[LoanDate] <= PeriodEnd ),
+                    VAR MonthsPaid =
+                        MIN ( DATEDIFF ( Fact_Loan[LoanDate], PeriodEnd, MONTH ), Fact_Loan[duration] )
+                    RETURN
+                        MAX ( Fact_Loan[amount] - MonthsPaid * Fact_Loan[payments], 0 )
+                ),
+                REMOVEFILTERS ( Dim_Date )
+            )
+
+    // K03
+    MEASURE '_M_TaiChinh'[LDR] =
+        DIVIDE ( [Dư nợ cho vay cuối kỳ], [Tổng số dư tiền gửi] )
+
+    MEASURE '_M_TaiChinh'[Ngưỡng LDR] = 0.85
+
+    // NHÓM 5: PHÍ VÀ LÃI
+
+    // K04
+    MEASURE '_M_TaiChinh'[Thu nhập phí] =
+        CALCULATE ( SUM ( Fact_Transaction[amount] ), Dim_TransType[IsFeeIncome] = TRUE () )
+
+    // K05
+    MEASURE '_M_TaiChinh'[Chi phí lãi trả khách] =
+        CALCULATE ( SUM ( Fact_Transaction[amount] ), Dim_TransType[k_symbol] = "UROK" )
+
+    // K06
+    MEASURE '_M_TaiChinh'[Chênh lệch phí - lãi] =
+        [Thu nhập phí] - [Chi phí lãi trả khách]
+
+EVALUATE
+    SUMMARIZECOLUMNS (
+        Dim_Date[Year],
+        "Số giao dịch", [Số giao dịch],
+        "Dòng tiền ròng", [Dòng tiền ròng],
+        "Số dư cuối kỳ", [Tổng số dư tiền gửi],
+        "Số TK cuối kỳ", [Số tài khoản cuối kỳ],
+        "Kiểm tra (phải ≈ 0)",
+            [Tổng số dư tiền gửi]
+                - COALESCE ( [Tổng số dư cùng kỳ năm trước], 0 )
+                - [Dòng tiền ròng],
+        "Số dư YoY %", [Tăng trưởng số dư YoY %],
+        "Dư nợ cuối kỳ", [Dư nợ cho vay cuối kỳ],
+        "LDR", [LDR],
+        "Thu phí", [Thu nhập phí],
+        "Chi lãi", [Chi phí lãi trả khách]
+    )
+ORDER BY Dim_Date[Year]
