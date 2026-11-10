@@ -1,0 +1,50 @@
+table 'Chọn chỉ số'
+	lineageTag: 8e7cab29-2607-429a-9c53-5f90a9857bc5
+
+	column 'Chọn chỉ số'
+		lineageTag: 0f7310c4-cdac-4057-9312-9af9ac116d2b
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Chọn chỉ số Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Chọn chỉ số Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Chọn chỉ số Fields'
+		isHidden
+		lineageTag: 562d96fb-8b90-4872-8773-32ee43cd32ae
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Chọn chỉ số Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Chọn chỉ số Order'
+		isHidden
+		formatString: 0
+		lineageTag: 4e5f00eb-1f0d-4756-8feb-35527a5feb59
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Chọn chỉ số' = calculated
+		mode: import
+		source =
+				{
+				    ("Tổng số dư tiền gửi", NAMEOF('_M_TaiChinh'[Tổng số dư tiền gửi]), 0),
+				    ("Dòng tiền ròng", NAMEOF('_M_TaiChinh'[Dòng tiền ròng]), 1),
+				    ("Số giao dịch", NAMEOF('_M_TaiChinh'[Số giao dịch]), 2),
+				    ("Số dư bình quân / tài khoản", NAMEOF('_M_TaiChinh'[Số dư bình quân / tài khoản]), 3)
+				}
+
+	annotation PBI_Id = be2031e79f2c4b688a318630fae22791
+
