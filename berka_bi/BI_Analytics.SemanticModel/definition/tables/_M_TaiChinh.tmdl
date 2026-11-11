@@ -184,6 +184,24 @@ table _M_TaiChinh
 		displayFolder: 1 Tổng quan
 		lineageTag: 7f905db9-3b84-4d99-97c8-d374aa9a4fa7
 
+	measure 'Số TK từng có số dư âm' =
+			
+			COALESCE (
+			    CALCULATE (
+			        DISTINCTCOUNT ( Fact_Balance_Monthly[account_id] ),
+			        Fact_Balance_Monthly[MinBalance] < 0
+			    ),
+			    0
+			)
+		formatString: #,0
+		displayFolder: 2 Giao dịch
+		lineageTag: 08f001c8-ce24-4009-8351-748cfb7a40d2
+
+	measure 'Tỷ lệ TK số dư âm' = DIVIDE ( [Số TK từng có số dư âm], [Số tài khoản cuối kỳ], 0 )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 2 Giao dịch
+		lineageTag: d41036c5-a279-4c88-b2b8-557ae679bd06
+
 	column Column1
 		dataType: string
 		isHidden

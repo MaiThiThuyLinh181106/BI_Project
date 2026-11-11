@@ -1,2 +1,32 @@
 cultureInfo en-US
 
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "table_m_taichinh.tổng_số_dư_tiền_gửi": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_M_TaiChinh",
+			          "ConceptualProperty": "Tổng số dư tiền gửi"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Tổng số dư tiền gửi": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+
