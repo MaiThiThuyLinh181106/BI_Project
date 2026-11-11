@@ -169,7 +169,18 @@ table _M_TaiChinh
 		displayFolder: 1 Tổng quan
 		lineageTag: b53a27e1-3145-49ad-a26e-f249224f5ece
 
-	measure 'Tiêu đề xu hướng' = "Xu hướng " & SELECTEDVALUE ( 'Chọn chỉ số'[Chọn chỉ số], "chỉ số" ) & " theo tháng"
+	measure 'Tiêu đề xu hướng' =
+			
+			VAR ChiSo =
+			    SUMMARIZE (
+			        'Chọn chỉ số',
+			        'Chọn chỉ số'[Chọn chỉ số],
+			        'Chọn chỉ số'[Chọn chỉ số Fields]
+			    )
+			RETURN
+			    "Xu hướng "
+			        & IF ( COUNTROWS ( ChiSo ) = 1, MAXX ( ChiSo, 'Chọn chỉ số'[Chọn chỉ số] ), "chỉ số" )
+			        & " theo tháng"
 		displayFolder: 1 Tổng quan
 		lineageTag: 7f905db9-3b84-4d99-97c8-d374aa9a4fa7
 
