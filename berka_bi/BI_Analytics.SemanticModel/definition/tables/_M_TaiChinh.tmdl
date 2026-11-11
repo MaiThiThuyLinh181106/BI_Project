@@ -202,6 +202,11 @@ table _M_TaiChinh
 		displayFolder: 2 Giao dịch
 		lineageTag: d41036c5-a279-4c88-b2b8-557ae679bd06
 
+	measure 'Số giao dịch BQ mỗi ngày' = DIVIDE ( [Số giao dịch], COUNTROWS ( Dim_Date ) )
+		formatString: 0.00
+		displayFolder: 2 Giao dịch
+		lineageTag: 4be0e0d7-f4df-43ae-b4e9-baa340eefc53
+
 	column Column1
 		dataType: string
 		isHidden
