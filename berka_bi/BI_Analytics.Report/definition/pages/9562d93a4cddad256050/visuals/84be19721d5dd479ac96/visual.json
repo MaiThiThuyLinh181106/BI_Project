@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "84be19721d5dd479ac96",
   "position": {
-    "x": 776.66666666666674,
-    "y": 340,
-    "z": 6000,
-    "height": 268.33333333333337,
-    "width": 773.33333333333337,
-    "tabOrder": 6000
+    "x": 982,
+    "y": 256,
+    "z": 1000,
+    "height": 284,
+    "width": 888,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -130,7 +130,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Arial'"
+                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
                 }
               }
             }

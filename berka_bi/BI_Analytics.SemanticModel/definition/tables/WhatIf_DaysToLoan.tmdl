@@ -1,0 +1,26 @@
+table WhatIf_DaysToLoan
+	lineageTag: e8cfb5c4-1547-4e0e-81ee-82c76da927d1
+
+	measure 'WhatIf_DaysToLoan Value' = SELECTEDVALUE('WhatIf_DaysToLoan'[WhatIf_DaysToLoan], 180)
+		formatString: 0
+		lineageTag: a2ed4efb-c29f-47d9-9c21-bfffba622bb3
+
+	column WhatIf_DaysToLoan
+		formatString: 0
+		lineageTag: 52745ed9-a37d-47e2-88d1-267e0f235078
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition WhatIf_DaysToLoan = calculated
+		mode: import
+		source = GENERATESERIES(0, 360, 30)
+
+	annotation PBI_Id = 0615c7b692a84339b5c093e80c7e13de
+

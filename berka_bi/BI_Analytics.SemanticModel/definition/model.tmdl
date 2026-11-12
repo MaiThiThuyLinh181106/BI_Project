@@ -41,6 +41,7 @@ ref table Dim_CardType
 ref table _M_TaiChinh
 ref table _M_RuiRo
 ref table 'Chọn chỉ số'
+ref table WhatIf_DaysToLoan
 
 ref cultureInfo en-US
 
