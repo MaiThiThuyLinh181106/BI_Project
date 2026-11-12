@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "cacb5f4b40c07cd11e9e",
   "position": {
-    "x": 40.198705987835318,
-    "y": 231.1425594300531,
+    "x": 40.74074074074074,
+    "y": 231.48148148148147,
     "z": 10000,
-    "height": 368.48813822182376,
-    "width": 1226.0605326289772,
+    "height": 379.62962962962962,
+    "width": 1224.0740740740739,
     "tabOrder": 10000
   },
   "visual": {
@@ -74,11 +74,11 @@
                       "Entity": "_M_TaiChinh"
                     }
                   },
-                  "Property": "Dòng tiền ròng YTD"
+                  "Property": "Dòng tiền ròng"
                 }
               },
-              "queryRef": "_M_TaiChinh.Dòng tiền ròng YTD",
-              "nativeQueryRef": "Dòng tiền ròng YTD"
+              "queryRef": "_M_TaiChinh.Dòng tiền ròng",
+              "nativeQueryRef": "Dòng tiền ròng"
             }
           ]
         }
@@ -92,6 +92,19 @@
               "expr": {
                 "Literal": {
                   "Value": "'linear'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryAxis": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -135,5 +148,65 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "3b275e68d52064bd5cbc",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Date"
+              }
+            },
+            "Property": "YearMonth"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "a392cdfa2e1230817170",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_M_TaiChinh"
+              }
+            },
+            "Property": "Tổng tiền ra"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e586e36744871e6411a4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_M_TaiChinh"
+              }
+            },
+            "Property": "Tổng tiền vào"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "47d7cdb31c72a7176657",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_M_TaiChinh"
+              }
+            },
+            "Property": "Dòng tiền ròng"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

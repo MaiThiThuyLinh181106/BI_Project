@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "d4a3265ae1d6e50803a8",
   "position": {
-    "x": 718.55186953255634,
-    "y": 611.35532023166218,
+    "x": 809.25925925925924,
+    "y": 616.66666666666663,
     "z": 12000,
     "height": 336.66416264812079,
     "width": 400.31211379552673,
@@ -82,11 +82,25 @@
                 "Property": "Số giao dịch"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
+    },
+    "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "axisType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Categorical'"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "visualContainerObjects": {
       "title": [

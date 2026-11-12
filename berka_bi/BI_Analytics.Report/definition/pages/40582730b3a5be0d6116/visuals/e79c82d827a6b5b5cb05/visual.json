@@ -23,11 +23,11 @@
                       "Entity": "_M_TaiChinh"
                     }
                   },
-                  "Property": "Dòng tiền ròng YTD"
+                  "Property": "Dòng tiền ròng"
                 }
               },
-              "queryRef": "_M_TaiChinh.Dòng tiền ròng YTD",
-              "nativeQueryRef": "Dòng tiền ròng YTD"
+              "queryRef": "_M_TaiChinh.Dòng tiền ròng",
+              "nativeQueryRef": "Dòng tiền ròng"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_TaiChinh"
                   }
                 },
-                "Property": "Dòng tiền ròng YTD"
+                "Property": "Dòng tiền ròng"
               }
             },
             "direction": "Descending"

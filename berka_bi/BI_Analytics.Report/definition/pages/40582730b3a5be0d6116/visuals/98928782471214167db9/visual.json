@@ -107,7 +107,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Số dư âm'"
+                  "Value": "'Tỷ lệ tài khoản bị số dư âm theo tháng'"
                 }
               }
             }
@@ -129,5 +129,37 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "583da20a99145caa9603",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Date"
+              }
+            },
+            "Property": "YearMonth"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "4ea253f0b0781ed18385",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_M_TaiChinh"
+              }
+            },
+            "Property": "Tỷ lệ TK số dư âm"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

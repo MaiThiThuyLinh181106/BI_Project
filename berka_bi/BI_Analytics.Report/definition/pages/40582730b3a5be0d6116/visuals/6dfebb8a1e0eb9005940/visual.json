@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "6dfebb8a1e0eb9005940",
   "position": {
-    "x": 40.198705987835318,
-    "y": 611.35532023166218,
+    "x": 40.74074074074074,
+    "y": 611.11111111111109,
     "z": 13000,
-    "height": 348.38878522790611,
-    "width": 666.62854096493572,
+    "height": 348.14814814814815,
+    "width": 746.29629629629619,
     "tabOrder": 13000
   },
   "visual": {
@@ -55,19 +55,18 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "_M_TaiChinh"
+                    "Entity": "Dim_Date"
                   }
                 },
-                "Property": "Số giao dịch BQ mỗi ngày"
+                "Property": "DayOfMonth"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": true
+        ]
       }
     },
     "objects": {
@@ -77,7 +76,7 @@
             "axisType": {
               "expr": {
                 "Literal": {
-                  "Value": "'Scalar'"
+                  "Value": "'Categorical'"
                 }
               }
             }
@@ -151,7 +150,77 @@
   "filterConfig": {
     "filters": [
       {
+        "name": "47256c0f50323cdb52b3",
+        "ordinal": 0,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_TransType"
+              }
+            },
+            "Property": "Channel"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "Dim_TransType",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "Channel"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Chuyển khoản'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Thẻ'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Tiền mặt'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
         "name": "1b6867b1e8c545ec66ad",
+        "ordinal": 1,
         "field": {
           "Column": {
             "Expression": {
@@ -162,34 +231,81 @@
             "Property": "DayOfMonth"
           }
         },
-        "type": "Advanced",
+        "type": "Advanced"
+      },
+      {
+        "name": "8f73a9538325d893c1eb",
+        "ordinal": 2,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_TransType"
+              }
+            },
+            "Property": "PurposeName"
+          }
+        },
+        "type": "Categorical",
         "filter": {
           "Version": 2,
           "From": [
             {
               "Name": "d",
-              "Entity": "Dim_Date",
+              "Entity": "Dim_TransType",
               "Type": 0
             }
           ],
           "Where": [
             {
               "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 3,
-                  "Left": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "d"
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "d"
+                              }
+                            },
+                            "Property": "PurposeName"
+                          }
                         }
-                      },
-                      "Property": "DayOfMonth"
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'Lãi phạt số dư âm'"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "'Phí sao kê'"
+                            }
+                          }
+                        ]
+                      ]
                     }
-                  },
-                  "Right": {
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
                     "Literal": {
-                      "Value": "31L"
+                      "Value": "true"
                     }
                   }
                 }
@@ -197,7 +313,23 @@
             }
           ]
         }
+      },
+      {
+        "name": "edb094e20e1e9dd0677e",
+        "ordinal": 3,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_M_TaiChinh"
+              }
+            },
+            "Property": "Số giao dịch BQ mỗi ngày"
+          }
+        },
+        "type": "Advanced"
       }
-    ]
+    ],
+    "filterSortOrder": "Custom"
   }
 }
