@@ -2,7 +2,8 @@
   "version": "1.0.0",
   "tabOrder": [
     "Linh_Measure_T1",
-    "Linh_KiemTra_SoDu"
+    "Linh_KiemTra_SoDu",
+    "Linh_Measure_T3"
   ],
-  "defaultTab": "Linh_KiemTra_SoDu"
+  "defaultTab": "Linh_Measure_T3"
 }

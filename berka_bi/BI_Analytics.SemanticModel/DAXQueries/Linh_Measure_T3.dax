@@ -1,0 +1,67 @@
+DEFINE
+    // Giao dịch do khách thực hiện (loại lãi, phí sao kê, lãi phạt do ngân hàng tự ghi)
+    MEASURE '_M_TaiChinh'[Số giao dịch của khách] =
+        CALCULATE (
+            [Số giao dịch],
+            Dim_TransType[Channel] <> "Ngân hàng tự ghi",
+            NOT ( Dim_TransType[PurposeName] IN { "Phí sao kê", "Lãi phạt số dư âm" } )
+        )
+
+    // K15: số khách hàng (chủ tài khoản) có tài khoản mở tính đến cuối kỳ
+    MEASURE '_M_TaiChinh'[Số khách hàng] =
+        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+        RETURN
+            CALCULATE (
+                DISTINCTCOUNT ( Dim_Account[OwnerClientId] ),
+                Dim_Account[AccountOpenDate] <= PeriodEnd
+            )
+
+    // K16: tài khoản có ít nhất 1 giao dịch do khách thực hiện trong kỳ
+    MEASURE '_M_TaiChinh'[Số TK hoạt động] =
+        CALCULATE (
+            DISTINCTCOUNT ( Fact_Transaction[account_id] ),
+            Dim_TransType[Channel] <> "Ngân hàng tự ghi",
+            NOT ( Dim_TransType[PurposeName] IN { "Phí sao kê", "Lãi phạt số dư âm" } )
+        )
+
+    // K18: tài khoản nhận lương hưu và tỷ trọng
+    MEASURE '_M_TaiChinh'[Số TK nhận lương hưu] =
+        CALCULATE (
+            DISTINCTCOUNT ( Fact_Transaction[account_id] ),
+            Dim_TransType[k_symbol] = "DUCHOD"
+        )
+
+    MEASURE '_M_TaiChinh'[Tỷ trọng TK nhận lương hưu] =
+        DIVIDE ( [Số TK nhận lương hưu], [Số tài khoản cuối kỳ], 0 )
+
+    // K19: số giao dịch của khách bình quân trên mỗi tài khoản mỗi tháng
+    MEASURE '_M_TaiChinh'[GD BQ mỗi TK mỗi tháng] =
+        DIVIDE ( [Số giao dịch của khách], COUNTROWS ( Fact_Balance_Monthly ) )
+
+    // K20: thị phần tài khoản của vùng
+    MEASURE '_M_TaiChinh'[Thị phần tài khoản] =
+        DIVIDE (
+            [Số tài khoản cuối kỳ],
+            CALCULATE ( [Số tài khoản cuối kỳ], REMOVEFILTERS ( Dim_District ) )
+        )
+
+    // Dùng cho biểu đồ câu 12
+    MEASURE '_M_TaiChinh'[Lương trung bình vùng] =
+        AVERAGE ( Dim_District[average_salary] )
+
+    MEASURE '_M_TaiChinh'[Tỷ lệ thất nghiệp 1996] =
+        AVERAGE ( Dim_District[unemploy_rate_96] )
+
+EVALUATE
+    SUMMARIZECOLUMNS (
+        Dim_District[region],
+        "Số khách hàng", [Số khách hàng],
+        "Số TK hoạt động", [Số TK hoạt động],
+        "Số dư BQ/TK", [Số dư bình quân / tài khoản],
+        "TK lương hưu", [Số TK nhận lương hưu],
+        "Tỷ trọng lương hưu", [Tỷ trọng TK nhận lương hưu],
+        "GD BQ/TK/tháng", [GD BQ mỗi TK mỗi tháng],
+        "Thị phần TK", [Thị phần tài khoản],
+        "Lương TB", [Lương trung bình vùng]
+    )
+ORDER BY Dim_District[region]

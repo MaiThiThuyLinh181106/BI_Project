@@ -4,10 +4,10 @@
   "position": {
     "x": 48.573436401967676,
     "y": 959.74410545956823,
-    "z": 5,
+    "z": 5000,
     "height": 95.471926721108886,
-    "width": 1822.3413381152011,
-    "tabOrder": 5
+    "width": 897.77110039498882,
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "textbox",
@@ -26,7 +26,7 @@
                     }
                   },
                   {
-                    "value": ": ",
+                    "value": ":Nhóm nhận lương hưu (16,4% tài khoản) giữ ít tiền hơn khoảng 38%; Prague thu nhập cao nhất nhưng thị phần chỉ 12,3%.",
                     "textStyle": {
                       "fontSize": "16pt"
                     }

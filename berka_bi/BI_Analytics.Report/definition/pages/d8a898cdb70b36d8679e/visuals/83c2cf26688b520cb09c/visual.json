@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "83c2cf26688b520cb09c",
   "position": {
-    "x": 1058.5659243463301,
-    "y": 97.146872803935352,
-    "z": 3,
+    "x": 990.63829787234044,
+    "y": 98.042553191489361,
+    "z": 3000,
     "height": 120,
-    "width": 300,
-    "tabOrder": 3
+    "width": 400,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "_M_TaiChinh"
                     }
                   },
-                  "Property": "Dòng tiền ròng"
+                  "Property": "Số dư bình quân / tài khoản"
                 }
               },
-              "queryRef": "_M_TaiChinh.Dòng tiền ròng",
-              "nativeQueryRef": "Dòng tiền ròng"
+              "queryRef": "_M_TaiChinh.Số dư bình quân / tài khoản",
+              "nativeQueryRef": "Số dư bình quân / tài khoản"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_TaiChinh"
                   }
                 },
-                "Property": "Dòng tiền ròng"
+                "Property": "Số dư bình quân / tài khoản"
               }
             },
             "direction": "Descending"
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dòng tiền ròng'"
+                  "Value": "'Số dư bình quân/ tài khoản'"
                 }
               }
             },

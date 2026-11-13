@@ -207,6 +207,99 @@ table _M_TaiChinh
 		displayFolder: 2 Giao dịch
 		lineageTag: 4be0e0d7-f4df-43ae-b4e9-baa340eefc53
 
+	measure 'Số giao dịch của khách' = ```
+			
+			        CALCULATE (
+			            [Số giao dịch],
+			            Dim_TransType[Channel] <> "Ngân hàng tự ghi",
+			            NOT ( Dim_TransType[PurposeName] IN { "Phí sao kê", "Lãi phạt số dư âm" } )
+			        )
+			```
+		formatString: #,0
+		displayFolder: 3 Khách hàng & vùng
+		lineageTag: f47427eb-3c1a-4778-995a-b361f042b77f
+
+	measure 'Số khách hàng' = ```
+			
+			        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+			        RETURN
+			            CALCULATE (
+			                DISTINCTCOUNT ( Dim_Account[OwnerClientId] ),
+			                Dim_Account[AccountOpenDate] <= PeriodEnd
+			            )
+			```
+		formatString: #,0
+		displayFolder: 3 Khách hàng & vùng
+		lineageTag: d4960d77-4219-4f54-a317-a0ff140921a7
+
+	measure 'Số TK hoạt động' = ```
+			
+			        CALCULATE (
+			            DISTINCTCOUNT ( Fact_Transaction[account_id] ),
+			            Dim_TransType[Channel] <> "Ngân hàng tự ghi",
+			            NOT ( Dim_TransType[PurposeName] IN { "Phí sao kê", "Lãi phạt số dư âm" } )
+			        )
+			```
+		formatString: #,0
+		displayFolder: 3 Khách hàng & vùng
+		lineageTag: 3672026d-22d6-4464-a649-4b3541043f48
+
+	measure 'Số TK nhận lương hưu' =
+			
+			COALESCE (
+			    CALCULATE (
+			        DISTINCTCOUNT ( Fact_Transaction[account_id] ),
+			        Dim_TransType[k_symbol] = "DUCHOD"
+			    ),
+			    0
+			)
+		formatString: #,0
+		displayFolder: 3 Khách hàng & vùng
+		lineageTag: 0ef3b442-7924-43b4-8a5c-c2b5099f3cd9
+
+	measure 'Tỷ trọng TK nhận lương hưu' = ```
+			
+			        DIVIDE ( [Số TK nhận lương hưu], [Số tài khoản cuối kỳ], 0 )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 3 Khách hàng & vùng
+		lineageTag: 56539044-2b72-42ec-9df7-58a823a326d2
+
+	measure 'GD BQ mỗi TK mỗi tháng' = ```
+			
+			        DIVIDE ( [Số giao dịch của khách], COUNTROWS ( Fact_Balance_Monthly ) )
+			```
+		formatString: 0.0
+		displayFolder: 3 Khách hàng & vùng
+		lineageTag: fe69a7e4-3e33-408f-b61c-e06f7b84b15d
+
+	measure 'Thị phần tài khoản' = ```
+			
+			        DIVIDE (
+			            [Số tài khoản cuối kỳ],
+			            CALCULATE ( [Số tài khoản cuối kỳ], REMOVEFILTERS ( Dim_District ) )
+			        )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 3 Khách hàng & vùng
+		lineageTag: d864a833-2d1e-440b-9f88-41d44357edfe
+
+	measure 'Lương trung bình vùng' = ```
+			
+			        AVERAGE ( Dim_District[average_salary] )
+			```
+		formatString: #,0
+		displayFolder: 3 Khách hàng & vùng
+		lineageTag: 2496fae3-b794-4811-a12c-cf6d63830847
+
+	measure 'Tỷ lệ thất nghiệp 1996' = ```
+			
+			        AVERAGE ( Dim_District[unemploy_rate_96] )
+			```
+		formatString: 0.00
+		displayFolder: 3 Khách hàng & vùng
+		lineageTag: 2e148bfc-2723-48b5-b956-6d67949d4768
+
 	column Column1
 		dataType: string
 		isHidden

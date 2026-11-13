@@ -6,7 +6,7 @@
     "y": 97.146872803935352,
     "z": 0,
     "height": 120,
-    "width": 300,
+    "width": 400,
     "tabOrder": 0
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "_M_TaiChinh"
                     }
                   },
-                  "Property": "Tổng tiền vào"
+                  "Property": "Số khách hàng"
                 }
               },
-              "queryRef": "_M_TaiChinh.Tổng tiền vào",
-              "nativeQueryRef": "Tổng tiền vào"
+              "queryRef": "_M_TaiChinh.Số khách hàng",
+              "nativeQueryRef": "Số khách hàng"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_TaiChinh"
                   }
                 },
-                "Property": "Tổng tiền vào"
+                "Property": "Số khách hàng"
               }
             },
             "direction": "Descending"
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Tổng tiền vào'"
+                  "Value": "'Số khách hàng'"
                 }
               }
             },

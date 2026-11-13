@@ -6,7 +6,7 @@
     "y": 959.74410545956823,
     "z": 5000,
     "height": 95.471926721108886,
-    "width": 1822.3413381152011,
+    "width": 1001.61775753023,
     "tabOrder": 5000
   },
   "visual": {
@@ -19,22 +19,15 @@
               {
                 "textRuns": [
                   {
-                    "value": "Phát hiện & khuyến nghị",
+                    "value": "Phát hiện:",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
                     }
                   },
                   {
-                    "value": ": Giao dịch của khách tập trung ngày 5–14 hằng tháng và tháng 1. Tiền mặt chiếm phần lớn giao dịch, thẻ gần như chưa được dùng. 6,4% tài khoản từng bị số dư âm. ",
+                    "value": " Giao dịch của khách tập trung ngày 5–14 hằng tháng và tháng 1. Tiền mặt chiếm phần lớn giao dịch, thẻ gần như chưa được dùng. 6,4% tài khoản từng bị số dư âm.",
                     "textStyle": {
-                      "fontSize": "16pt"
-                    }
-                  },
-                  {
-                    "value": "→ Chuẩn bị thanh khoản theo lịch cao điểm; đẩy mạnh chuyển dịch sang thẻ (Trang 4); đưa tài khoản số dư âm vào danh sách cảnh báo sớm.",
-                    "textStyle": {
-                      "fontWeight": "bold",
                       "fontSize": "16pt"
                     }
                   }

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "02b6f75bcd22697033a1",
   "position": {
-    "x": 1572.7743717740568,
-    "y": 97.146872803935352,
-    "z": 1,
+    "x": 1458.3829787234042,
+    "y": 98.042553191489361,
+    "z": 1000,
     "height": 120,
-    "width": 298,
-    "tabOrder": 1
+    "width": 400,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "_M_TaiChinh"
                     }
                   },
-                  "Property": "Tỷ lệ TK số dư âm"
+                  "Property": "Tỷ trọng TK nhận lương hưu"
                 }
               },
-              "queryRef": "_M_TaiChinh.Tỷ lệ TK số dư âm",
-              "nativeQueryRef": "Tỷ lệ TK số dư âm"
+              "queryRef": "_M_TaiChinh.Tỷ trọng TK nhận lương hưu",
+              "nativeQueryRef": "Tỷ trọng TK nhận lương hưu"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_TaiChinh"
                   }
                 },
-                "Property": "Tỷ lệ TK số dư âm"
+                "Property": "Tỷ trọng TK nhận lương hưu"
               }
             },
             "direction": "Descending"
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Tỷ lệ tài khoản số dư âm'"
+                  "Value": "'Tỷ lệ tài khoản nhận lương hưu'"
                 }
               }
             },

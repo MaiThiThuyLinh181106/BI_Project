@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "d9a35d427c703e1464a3",
   "position": {
-    "x": 525.93307000751213,
-    "y": 97.146872803935352,
-    "z": 2,
+    "x": 512.68085106382978,
+    "y": 98.042553191489361,
+    "z": 2000,
     "height": 120,
-    "width": 300,
-    "tabOrder": 2
+    "width": 400,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "_M_TaiChinh"
                     }
                   },
-                  "Property": "Tổng tiền ra"
+                  "Property": "Số TK hoạt động"
                 }
               },
-              "queryRef": "_M_TaiChinh.Tổng tiền ra",
-              "nativeQueryRef": "Tổng tiền ra"
+              "queryRef": "_M_TaiChinh.Số TK hoạt động",
+              "nativeQueryRef": "Số TK hoạt động"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_TaiChinh"
                   }
                 },
-                "Property": "Tổng tiền ra"
+                "Property": "Số TK hoạt động"
               }
             },
             "direction": "Descending"
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Tổng tiền ra'"
+                  "Value": "'Số tài khoản hoạt động'"
                 }
               }
             },
