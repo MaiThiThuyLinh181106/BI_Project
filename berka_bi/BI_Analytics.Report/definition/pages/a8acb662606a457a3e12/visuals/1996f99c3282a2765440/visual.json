@@ -23,11 +23,11 @@
                       "Entity": "_M_TaiChinh"
                     }
                   },
-                  "Property": "Số khách hàng"
+                  "Property": "Tỷ lệ TK có thẻ"
                 }
               },
-              "queryRef": "_M_TaiChinh.Số khách hàng",
-              "nativeQueryRef": "Số khách hàng"
+              "queryRef": "_M_TaiChinh.Tỷ lệ TK có thẻ",
+              "nativeQueryRef": "Tỷ lệ TK có thẻ"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_TaiChinh"
                   }
                 },
-                "Property": "Số khách hàng"
+                "Property": "Tỷ lệ TK có thẻ"
               }
             },
             "direction": "Descending"
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Số khách hàng'"
+                  "Value": "'Tỷ lệ tài khoản có thẻ'"
                 }
               }
             },

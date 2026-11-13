@@ -4,10 +4,10 @@
   "position": {
     "x": 512.68085106382978,
     "y": 98.042553191489361,
-    "z": 2,
+    "z": 2000,
     "height": 120,
     "width": 400,
-    "tabOrder": 2
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "_M_TaiChinh"
                     }
                   },
-                  "Property": "Số TK hoạt động"
+                  "Property": "Số sản phẩm BQ / TK"
                 }
               },
-              "queryRef": "_M_TaiChinh.Số TK hoạt động",
-              "nativeQueryRef": "Số TK hoạt động"
+              "queryRef": "_M_TaiChinh.Số sản phẩm BQ / TK",
+              "nativeQueryRef": "Số sản phẩm BQ / TK"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_TaiChinh"
                   }
                 },
-                "Property": "Số TK hoạt động"
+                "Property": "Số sản phẩm BQ / TK"
               }
             },
             "direction": "Descending"
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Số tài khoản hoạt động'"
+                  "Value": "'\tSố sản phẩm / tài khoản'"
                 }
               }
             },

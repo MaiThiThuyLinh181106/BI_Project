@@ -1,0 +1,101 @@
+DEFINE
+    // K22: số thẻ đã phát hành tính đến cuối kỳ (cộng dồn)
+    MEASURE '_M_TaiChinh'[Số thẻ đã phát hành] =
+        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+        RETURN
+            CALCULATE (
+                COUNTROWS ( Fact_Card ),
+                REMOVEFILTERS ( Dim_Date ),
+                Fact_Card[CardIssuedDate] <= PeriodEnd
+            )
+
+    // Số thẻ phát hành trong kỳ (dùng cho biểu đồ theo năm)
+    MEASURE '_M_TaiChinh'[Số thẻ phát hành trong kỳ] =
+        COUNTROWS ( Fact_Card )
+
+    // Số tài khoản có ít nhất một thẻ tính đến cuối kỳ
+    MEASURE '_M_TaiChinh'[Số TK có thẻ] =
+        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+        RETURN
+            COALESCE (
+                CALCULATE (
+                    COUNTROWS ( SUMMARIZE ( Fact_Card, Bridge_Disp[account_id] ) ),
+                    REMOVEFILTERS ( Dim_Date ),
+                    Fact_Card[CardIssuedDate] <= PeriodEnd
+                ),
+                0
+            )
+
+    // K21
+    MEASURE '_M_TaiChinh'[Tỷ lệ TK có thẻ] =
+        DIVIDE ( [Số TK có thẻ], [Số tài khoản cuối kỳ], 0 )
+
+    // K23: lệnh chi định kỳ
+    MEASURE '_M_TaiChinh'[Số lệnh chi định kỳ] =
+        COALESCE ( COUNTROWS ( Fact_Order ), 0 )
+
+    MEASURE '_M_TaiChinh'[Giá trị lệnh chi định kỳ] =
+        SUM ( Fact_Order[amount] )
+
+    // K24: số sản phẩm bình quân mỗi tài khoản (tài khoản + thẻ + khoản vay + lệnh chi định kỳ)
+    MEASURE '_M_TaiChinh'[Số sản phẩm BQ / TK] =
+        AVERAGEX (
+            VALUES ( Dim_Account[account_id] ),
+            1
+                + IF ( CALCULATE ( COUNTROWS ( Fact_Card ), REMOVEFILTERS ( Dim_Date ) ) > 0, 1 )
+                + IF ( CALCULATE ( COUNTROWS ( Fact_Loan ), REMOVEFILTERS ( Dim_Date ) ) > 0, 1 )
+                + IF ( CALCULATE ( COUNTROWS ( Fact_Order ) ) > 0, 1 )
+        )
+
+    // Ngưỡng "số dư cao": mức số dư của 25% tài khoản cao nhất toàn ngân hàng tại cuối kỳ
+    MEASURE '_M_TaiChinh'[Ngưỡng số dư cao] =
+        CALCULATE (
+            PERCENTILEX.INC ( VALUES ( Dim_Account[account_id] ), [Tổng số dư tiền gửi], 0.75 ),
+            ALL ( Dim_Account ),
+            ALL ( Dim_District )
+        )
+
+    // K25: tài khoản số dư cao nhưng chưa có thẻ
+    MEASURE '_M_TaiChinh'[TK số dư cao chưa có thẻ] =
+        VAR Threshold = [Ngưỡng số dư cao]
+        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+        RETURN
+            COALESCE (
+                COUNTROWS (
+                    FILTER (
+                        VALUES ( Dim_Account[account_id] ),
+                        [Tổng số dư tiền gửi] >= Threshold
+                            && CALCULATE (
+                                COUNTROWS ( Fact_Card ),
+                                REMOVEFILTERS ( Dim_Date ),
+                                Fact_Card[CardIssuedDate] <= PeriodEnd
+                            ) = 0
+                    )
+                ),
+                0
+            )
+
+    // Tỷ lệ tài khoản mục tiêu trong mỗi nhóm (dùng cho bảng câu 15)
+    MEASURE '_M_TaiChinh'[Tỷ lệ mục tiêu trong nhóm] =
+        DIVIDE ( [TK số dư cao chưa có thẻ], [Số tài khoản cuối kỳ], 0 )
+
+EVALUATE
+    ROW (
+        "Số thẻ", [Số thẻ đã phát hành],
+        "Số TK có thẻ", [Số TK có thẻ],
+        "TK có thẻ (cột CardStatus)", COUNTROWS ( FILTER ( Dim_Account, Dim_Account[CardStatus] = "Có thẻ" ) ),
+        "Tỷ lệ TK có thẻ", [Tỷ lệ TK có thẻ],
+        "Số lệnh chi", [Số lệnh chi định kỳ],
+        "Giá trị lệnh chi", [Giá trị lệnh chi định kỳ],
+        "SP BQ/TK", [Số sản phẩm BQ / TK],
+        "Ngưỡng số dư cao", [Ngưỡng số dư cao],
+        "TK số dư cao chưa có thẻ", [TK số dư cao chưa có thẻ]
+    )
+
+EVALUATE
+    SUMMARIZECOLUMNS (
+        Dim_Account[OwnerAgeGroup],
+        "Số TK", [Số tài khoản cuối kỳ],
+        "Tỷ lệ có thẻ", [Tỷ lệ TK có thẻ],
+        "TK mục tiêu", [TK số dư cao chưa có thẻ]
+    )

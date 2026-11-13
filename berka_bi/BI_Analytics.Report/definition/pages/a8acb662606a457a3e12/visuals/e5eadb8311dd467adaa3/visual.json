@@ -4,10 +4,10 @@
   "position": {
     "x": 1458.3829787234042,
     "y": 98.042553191489361,
-    "z": 1,
+    "z": 1000,
     "height": 120,
     "width": 400,
-    "tabOrder": 1
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "card",
@@ -23,11 +23,11 @@
                       "Entity": "_M_TaiChinh"
                     }
                   },
-                  "Property": "Tỷ trọng TK nhận lương hưu"
+                  "Property": "Số lệnh chi định kỳ"
                 }
               },
-              "queryRef": "_M_TaiChinh.Tỷ trọng TK nhận lương hưu",
-              "nativeQueryRef": "Tỷ trọng TK nhận lương hưu"
+              "queryRef": "_M_TaiChinh.Số lệnh chi định kỳ",
+              "nativeQueryRef": "Số lệnh chi định kỳ"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_TaiChinh"
                   }
                 },
-                "Property": "Tỷ trọng TK nhận lương hưu"
+                "Property": "Số lệnh chi định kỳ"
               }
             },
             "direction": "Descending"
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Tỷ lệ tài khoản nhận lương hưu'"
+                  "Value": "'\tSố lệnh chi định kỳ'"
                 }
               }
             },

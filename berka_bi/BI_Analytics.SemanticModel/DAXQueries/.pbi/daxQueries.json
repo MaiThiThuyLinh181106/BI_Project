@@ -3,7 +3,8 @@
   "tabOrder": [
     "Linh_Measure_T1",
     "Linh_KiemTra_SoDu",
-    "Linh_Measure_T3"
+    "Linh_Measure_T3",
+    "Linh_Measure_T4"
   ],
-  "defaultTab": "Linh_Measure_T3"
+  "defaultTab": "Linh_Measure_T4"
 }

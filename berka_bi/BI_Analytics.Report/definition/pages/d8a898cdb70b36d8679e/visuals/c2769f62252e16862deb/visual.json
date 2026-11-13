@@ -4,10 +4,10 @@
   "position": {
     "x": 721.90176169820927,
     "y": 602.98058981752979,
-    "z": 9005,
+    "z": 14000,
     "height": 355.088569559212,
     "width": 1149.0130128189596,
-    "tabOrder": 9005
+    "tabOrder": 14000
   },
   "visual": {
     "visualType": "scatterChart",
@@ -217,6 +217,26 @@
               "expr": {
                 "Literal": {
                   "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "showGradientLegend": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

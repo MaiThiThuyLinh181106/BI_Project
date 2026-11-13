@@ -4,10 +4,10 @@
   "position": {
     "x": 976.493566287833,
     "y": 959.74410545956823,
-    "z": 15,
+    "z": 10000,
     "height": 95.471926721108886,
     "width": 894.42120822933589,
-    "tabOrder": 15
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "textbox",
@@ -22,6 +22,12 @@
                     "value": "Khuyến nghị: ",
                     "textStyle": {
                       "fontWeight": "bold",
+                      "fontSize": "16pt"
+                    }
+                  },
+                  {
+                    "value": "Chiến dịch mời mở thẻ cho 641 tài khoản số dư cao, ưu tiên nhóm 30–60 tuổi, mục tiêu tỷ lệ có thẻ đạt 25%; Nâng hạng thẻ gold cho khách classic số dư cao; Bán chéo bảo hiểm cho khách đang có lệnh chi chi tiêu gia đình.",
+                    "textStyle": {
                       "fontSize": "16pt"
                     }
                   }

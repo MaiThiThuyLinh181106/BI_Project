@@ -300,6 +300,130 @@ table _M_TaiChinh
 		displayFolder: 3 Khách hàng & vùng
 		lineageTag: 2e148bfc-2723-48b5-b956-6d67949d4768
 
+	measure 'Số thẻ đã phát hành' = ```
+			
+			        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+			        RETURN
+			            CALCULATE (
+			                COUNTROWS ( Fact_Card ),
+			                REMOVEFILTERS ( Dim_Date ),
+			                Fact_Card[CardIssuedDate] <= PeriodEnd
+			            )
+			```
+		formatString: 0
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: f53b403e-4828-4ac3-a0c9-fc168f87490e
+
+	measure 'Số thẻ phát hành trong kỳ' = ```
+			
+			        COUNTROWS ( Fact_Card )
+			```
+		formatString: 0
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: ca850f0b-e095-40f2-b8ac-c73bfe955ecc
+
+	measure 'Số TK có thẻ' = ```
+			
+			        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+			        RETURN
+			            COALESCE (
+			                CALCULATE (
+			                    COUNTROWS ( SUMMARIZE ( Fact_Card, Bridge_Disp[account_id] ) ),
+			                    REMOVEFILTERS ( Dim_Date ),
+			                    Fact_Card[CardIssuedDate] <= PeriodEnd
+			                ),
+			                0
+			            )
+			```
+		formatString: 0
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: f16a37ca-b25b-4fc1-aa9d-7e0b39a2125a
+
+	measure 'Tỷ lệ TK có thẻ' = ```
+			
+			        DIVIDE ( [Số TK có thẻ], [Số tài khoản cuối kỳ], 0 )
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: 16d13af9-dd21-48fc-ba70-3d786af3b2ea
+
+	measure 'Số lệnh chi định kỳ' = ```
+			
+			        COALESCE ( COUNTROWS ( Fact_Order ), 0 )
+			```
+		formatString: #,0
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: b9d45f78-57b4-4291-8a29-11fd25463fa6
+
+	measure 'Giá trị lệnh chi định kỳ' = ```
+			
+			        SUM ( Fact_Order[amount] )
+			```
+		formatString: #,0
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: e5398824-d541-49d3-8358-bd9788785e7c
+
+	measure 'Số sản phẩm BQ / TK' = ```
+			
+			        AVERAGEX (
+			            VALUES ( Dim_Account[account_id] ),
+			            1
+			                + IF ( CALCULATE ( COUNTROWS ( Fact_Card ), REMOVEFILTERS ( Dim_Date ) ) > 0, 1 )
+			                + IF ( CALCULATE ( COUNTROWS ( Fact_Loan ), REMOVEFILTERS ( Dim_Date ) ) > 0, 1 )
+			                + IF ( CALCULATE ( COUNTROWS ( Fact_Order ) ) > 0, 1 )
+			        )
+			```
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: 25819b85-30e9-4ae2-84db-621cb65914c3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ngưỡng số dư cao' = ```
+			
+			        CALCULATE (
+			            PERCENTILEX.INC ( VALUES ( Dim_Account[account_id] ), [Tổng số dư tiền gửi], 0.75 ),
+			            ALL ( Dim_Account ),
+			            ALL ( Dim_District )
+			        )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: 3c2ecb9b-2ab3-48a6-868d-1051c883fdb5
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'TK số dư cao chưa có thẻ' = ```
+			
+			        VAR Threshold = [Ngưỡng số dư cao]
+			        VAR PeriodEnd = MAX ( Dim_Date[Date] )
+			        RETURN
+			            COALESCE (
+			                COUNTROWS (
+			                    FILTER (
+			                        VALUES ( Dim_Account[account_id] ),
+			                        [Tổng số dư tiền gửi] >= Threshold
+			                            && CALCULATE (
+			                                COUNTROWS ( Fact_Card ),
+			                                REMOVEFILTERS ( Dim_Date ),
+			                                Fact_Card[CardIssuedDate] <= PeriodEnd
+			                            ) = 0
+			                    )
+			                ),
+			                0
+			            )
+			```
+		formatString: 0
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: 50a5dd2e-e446-41a4-b769-231b10416926
+
+	measure 'Tỷ lệ mục tiêu trong nhóm' = ```
+			
+			        DIVIDE ( [TK số dư cao chưa có thẻ], [Số tài khoản cuối kỳ], 0 )
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 4 Sản phẩm & bán chéo
+		lineageTag: 83f2416d-c058-4e9f-ab61-6b6345062cda
+
 	column Column1
 		dataType: string
 		isHidden
