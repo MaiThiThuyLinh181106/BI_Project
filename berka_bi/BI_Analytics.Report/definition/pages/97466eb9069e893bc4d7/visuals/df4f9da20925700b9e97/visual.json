@@ -220,6 +220,11 @@
         }
       ]
     },
+    "syncGroup": {
+      "groupName": "region1",
+      "fieldChanges": true,
+      "filterChanges": true
+    },
     "drillFilterOtherVisuals": true
   }
 }

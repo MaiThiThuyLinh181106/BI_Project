@@ -99,6 +99,17 @@
           "selector": {
             "metadata": "_M_TaiChinh.Ngưỡng LDR"
           }
+        },
+        {
+          "properties": {
+            "lineChartType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'linear'"
+                }
+              }
+            }
+          }
         }
       ]
     },

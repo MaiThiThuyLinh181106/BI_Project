@@ -220,6 +220,11 @@
         }
       ]
     },
+    "syncGroup": {
+      "groupName": "OwnerAgeGroup1",
+      "fieldChanges": true,
+      "filterChanges": true
+    },
     "drillFilterOtherVisuals": true
   }
 }

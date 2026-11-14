@@ -4,10 +4,10 @@
   "position": {
     "x": 48,
     "y": 256,
-    "z": 4000,
+    "z": 0,
     "height": 300,
     "width": 1070,
-    "tabOrder": 4000
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "lineChart",
@@ -102,6 +102,21 @@
         "isDefaultSort": true
       }
     },
+    "objects": {
+      "lineStyles": [
+        {
+          "properties": {
+            "lineChartType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'linear'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "visualContainerObjects": {
       "title": [
         {
@@ -109,7 +124,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Xu hướng NPL qua các năm so với ngưỡng an toàn Basel (3.0%)'"
+                  "Value": "'NPL theo năm giải ngân so với ngưỡng 3%'"
                 }
               }
             },

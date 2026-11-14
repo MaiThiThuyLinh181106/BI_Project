@@ -4,10 +4,10 @@
   "position": {
     "x": 46,
     "y": 592,
-    "z": 6000,
+    "z": 2000,
     "height": 296,
     "width": 982,
-    "tabOrder": 6000
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -29,6 +29,25 @@
               "queryRef": "Dim_District.region",
               "nativeQueryRef": "region",
               "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_M_RuiRo"
+                    }
+                  },
+                  "Property": "Total Loans"
+                }
+              },
+              "queryRef": "_M_RuiRo.Total Loans",
+              "nativeQueryRef": "Số khoản vay",
+              "displayName": "Số khoản vay"
             }
           ]
         },
@@ -88,6 +107,19 @@
         {
           "properties": {
             "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"

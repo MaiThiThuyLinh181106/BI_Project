@@ -4,10 +4,10 @@
   "position": {
     "x": 46,
     "y": 898,
-    "z": 17000,
+    "z": 13000,
     "height": 158,
     "width": 982,
-    "tabOrder": 17000
+    "tabOrder": 13000
   },
   "visual": {
     "visualType": "textbox",
@@ -30,7 +30,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "NPL ở mức báo động 15.09% (15.58M), gấp 5 lần ngưỡng an toàn 3%; tập trung cao nhất tại North Moravia (21.4%)",
+                    "value": "NPL 15,1%, gấp 5 lần ngưỡng 3%; cao nhất tại north Moravia (21,4%).",
                     "textStyle": {
                       "fontSize": "16pt"
                     }
@@ -41,7 +41,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Mô phỏng What-if: yêu cầu mở TK ≥180 ngày giúp tránh được14 khoản nợ xấu nhưng đồng thời vay tốt bị bỏ lỡ cũng cao",
+                    "value": " Chặn theo số ngày mở tài khoản làm mất nhiều khoản vay tốt mà NPL gần như không giảm.",
                     "textStyle": {
                       "fontSize": "16pt"
                     }
@@ -73,6 +73,26 @@
                       "Value": "'#CFEAFA'"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
                 }
               }
             }

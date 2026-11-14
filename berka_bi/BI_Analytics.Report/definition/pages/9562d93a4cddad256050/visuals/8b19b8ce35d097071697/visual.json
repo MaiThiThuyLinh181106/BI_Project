@@ -4,10 +4,10 @@
   "position": {
     "x": 982,
     "y": 914,
-    "z": 15000,
+    "z": 11000,
     "height": 144,
     "width": 888,
-    "tabOrder": 15000
+    "tabOrder": 11000
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Đề xuất:",
+                    "value": "Khuyến nghị:",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,25 +30,22 @@
               {
                 "textRuns": [
                   {
-                    "value": "Đẩy mạnh bán chéo (Cross-sell) gói vay tiêu dùng tín chấp cho tệp khách hàng tiền gửi hiện hữu",
+                    "value": "• Mở rộng cho vay cho khách tiền gửi hiện hữu, nhưng chỉ với nhóm có điểm rủi ro thấp theo mô hình ở Trang 7 (NPL hiện 15,1%, Trang 6).",
                     "textStyle": {
                       "fontSize": "16pt"
                     }
                   }
-                ],
-                "listType": "bullet"
+                ]
               },
               {
                 "textRuns": [
                   {
-                    "value": "Đồng thời tung các gói vay tiêu dùng kỳ hạn ngắn từ 12-16 tháng để cân bằng cơ cấu, tránh bị phụ thuộc vào kỳ hạn 60 tháng",
+                    "value": "• Kiểm tra NPL theo kỳ hạn trước khi điều chỉnh cơ cấu; nếu kỳ hạn dài rủi ro cao hơn, ưu tiên gói 12–24 tháng.",
                     "textStyle": {
-                      "fontSize": "16pt",
-                      "color": "#000000"
+                      "fontSize": "16pt"
                     }
                   }
-                ],
-                "listType": "bullet"
+                ]
               }
             ]
           }
@@ -71,9 +68,29 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#CFEAFA'"
+                      "Value": "'#F2CAE4'"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
                 }
               }
             }

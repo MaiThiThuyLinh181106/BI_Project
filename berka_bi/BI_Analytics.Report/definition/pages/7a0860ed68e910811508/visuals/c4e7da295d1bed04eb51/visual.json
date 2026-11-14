@@ -4,10 +4,10 @@
   "position": {
     "x": 46.380364098153265,
     "y": 98.471961648792828,
-    "z": 8000,
+    "z": 4000,
     "height": 120,
     "width": 300,
-    "tabOrder": 8000
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "card",
@@ -181,5 +181,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "7d74a853b87bdc12ac18",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_M_RuiRo"
+              }
+            },
+            "Property": "NPL Rate"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

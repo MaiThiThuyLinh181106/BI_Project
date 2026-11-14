@@ -4,10 +4,10 @@
   "position": {
     "x": 1080,
     "y": 898,
-    "z": 18000,
+    "z": 14000,
     "height": 158,
     "width": 782,
-    "tabOrder": 18000
+    "tabOrder": 14000
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Đề xuất:",
+                    "value": "Khuyến nghị:",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontSize": "16pt"
@@ -30,42 +30,30 @@
               {
                 "textRuns": [
                   {
-                    "value": "Siết chặt điều kiện: yêu cầu mở TK tối thiểu 180 ngày mới duyệt vay (ưu tiên tại North Moravia); ",
+                    "value": "• Dùng mô hình chấm điểm hành vi trước khi vay (Trang 7).",
                     "textStyle": {
                       "fontSize": "16pt"
                     }
                   }
-                ],
-                "listType": "bullet"
+                ]
               },
               {
                 "textRuns": [
                   {
-                    "value": "trích lập dự phòng ",
-                    "textStyle": {
-                      "fontSize": "16pt"
-                    }
-                  },
-                  {
-                    "value": "Expected Loss",
-                    "textStyle": {
-                      "fontWeight": "bold",
-                      "fontSize": "16pt"
-                    }
-                  },
-                  {
-                    "value": " 7M và xử lý sớm 45 khoản quá hạn nhóm D",
+                    "value": " • Trích lập dự phòng khoảng 7M; xử lý sớm 45 khoản quá hạn.",
                     "textStyle": {
                       "fontSize": "16pt"
                     }
                   }
-                ],
-                "listType": "bullet"
+                ]
               },
               {
                 "textRuns": [
                   {
-                    "value": ""
+                    "value": " • Rà soát điều kiện cho vay tại north Moravia.",
+                    "textStyle": {
+                      "fontSize": "16pt"
+                    }
                   }
                 ]
               }
@@ -90,9 +78,29 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#CFEAFA'"
+                      "Value": "'#F2CAE4'"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
                 }
               }
             }

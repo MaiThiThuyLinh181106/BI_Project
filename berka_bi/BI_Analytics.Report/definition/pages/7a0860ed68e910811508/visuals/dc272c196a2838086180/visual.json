@@ -4,10 +4,10 @@
   "position": {
     "x": 1572.7243768225342,
     "y": 98.471961648792828,
-    "z": 9000,
+    "z": 5000,
     "height": 120,
     "width": 298,
-    "tabOrder": 9000
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "card",
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Tổn thất dự kiến (EL)'"
+                  "Value": "'Tổn thất ước tính trên nợ xấu'"
                 }
               }
             },
@@ -114,7 +114,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "15D"
+                  "Value": "14D"
                 }
               }
             },

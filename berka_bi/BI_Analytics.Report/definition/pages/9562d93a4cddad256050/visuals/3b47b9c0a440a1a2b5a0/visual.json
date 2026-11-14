@@ -4,10 +4,10 @@
   "position": {
     "x": 46,
     "y": 914,
-    "z": 14000,
+    "z": 10000,
     "height": 144,
     "width": 914,
-    "tabOrder": 14000
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "textbox",
@@ -30,35 +30,32 @@
               {
                 "textRuns": [
                   {
-                    "value": "Quy mô giải ngân tăng bùng nổ gấp 10 lần trong 1993–1997 (3M -> 31M)",
+                    "value": "• Giải ngân tăng từ 13M (1994) lên 31M (1997), giảm còn 25M năm 1998.",
                     "textStyle": {
                       "fontSize": "16pt"
                     }
                   }
-                ],
-                "listType": "bullet"
+                ]
               },
               {
                 "textRuns": [
                   {
-                    "value": "Danh mục tập trung lớn vào kỳ hạn dài 48–60 tháng, mức trả ổn định (4K - 4,5K/tháng)",
+                    "value": " • 61% giá trị giải ngân thuộc kỳ hạn 48–60 tháng.",
                     "textStyle": {
                       "fontSize": "16pt"
                     }
                   }
-                ],
-                "listType": "bullet"
+                ]
               },
               {
                 "textRuns": [
                   {
-                    "value": "Tỷ lệ thâm nhập tín dụng mới đạt 15.16%",
+                    "value": " • Chỉ 15,2% tài khoản có khoản vay.",
                     "textStyle": {
                       "fontSize": "16pt"
                     }
                   }
-                ],
-                "listType": "bullet"
+                ]
               },
               {
                 "textRuns": [
@@ -103,14 +100,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
+                  "Value": "true"
                 }
               }
             },
@@ -118,6 +108,13 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
                 }
               }
             }
