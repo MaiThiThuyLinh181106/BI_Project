@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "fd7840e459ee6bb0d2a4",
+  "position": {
+    "x": 46,
+    "y": 16,
+    "z": 5,
+    "height": 70,
+    "width": 982,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Phân khúc & chấm điểm",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "32pt",
+                      "color": "#12239e"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

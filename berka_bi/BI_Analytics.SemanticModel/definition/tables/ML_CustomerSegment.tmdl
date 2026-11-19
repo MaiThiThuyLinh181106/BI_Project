@@ -1,0 +1,125 @@
+table ML_CustomerSegment
+	lineageTag: 61a3864d-5284-4ea4-99b2-9df6cac87835
+
+	column account_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 002c8444-a0e2-4ca6-bb4d-ab241f4b6ef3
+		summarizeBy: none
+		sourceColumn: account_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Recency
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d60bef9-acbb-4a5a-9c98-da737554d64b
+		summarizeBy: average
+		sourceColumn: Recency
+
+		annotation SummarizationSetBy = User
+
+	column Frequency
+		dataType: int64
+		formatString: 0
+		lineageTag: e1a48886-f080-41bc-bef4-22a5046ed6d0
+		summarizeBy: average
+		sourceColumn: Frequency
+
+		annotation SummarizationSetBy = User
+
+	column Monetary
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: de6b54d0-1bfb-4aae-bb24-57abaa02b7ea
+		summarizeBy: none
+		sourceColumn: Monetary
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column AvgBalance
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: afbf1f72-f637-4380-a759-abcc26f78a5a
+		summarizeBy: average
+		sourceColumn: AvgBalance
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Cluster_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 966ffb31-7ceb-48ef-96f1-8e1d3bfc46bf
+		summarizeBy: none
+		sourceColumn: Cluster_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Segment_Name
+		dataType: string
+		lineageTag: 07892501-4425-40a7-b31c-eec5d6ce3712
+		summarizeBy: none
+		sourceColumn: Segment_Name
+		sortByColumn: Segment_Order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment_Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 89c3514b-bd9d-4bcf-a383-0f18752cca5b
+		summarizeBy: none
+		sourceColumn: Segment_Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition ML_CustomerSegment = m
+		mode: import
+		queryGroup: Dimension
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents(DataFolder & "ml_customer_segments.csv"),
+				        [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None]
+				    ),
+				    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    ChangedType = Table.TransformColumnTypes(
+				        PromotedHeaders,
+				        {
+				            {"account_id", Int64.Type},
+				            {"Recency", type number},
+				            {"Frequency", type number},
+				            {"Monetary", Currency.Type},
+				            {"AvgBalance", Currency.Type},
+				            {"Cluster_ID", Int64.Type},
+				            {"Segment_Name", type text},
+				            {"Segment_Order", Int64.Type}
+				        },
+				        "en-US"
+				    ),
+				    ToInt = Table.TransformColumnTypes(
+				        ChangedType,
+				        {{"Recency", Int64.Type}, {"Frequency", Int64.Type}}
+				    )
+				in
+				    ToInt
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

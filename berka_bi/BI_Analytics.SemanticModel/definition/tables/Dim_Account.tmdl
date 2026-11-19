@@ -44,7 +44,7 @@ table Dim_Account
 		isHidden
 		formatString: 0
 		lineageTag: 6ce2a172-349f-4122-8a8b-1c78d8593924
-		summarizeBy: sum
+		summarizeBy: count
 
 		changedProperty = IsHidden
 

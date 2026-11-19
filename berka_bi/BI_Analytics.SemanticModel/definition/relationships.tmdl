@@ -63,3 +63,7 @@ relationship cbf0f567-3bbd-e48b-4dcf-bc46231fc8a8
 	fromColumn: Fact_Card.CardIssuedDate
 	toColumn: Dim_Date.Date
 
+relationship b26ae7db-b9ec-d99d-3141-a4ae04259805
+	fromColumn: Dim_Account.account_id
+	toColumn: ML_CustomerSegment.account_id
+
