@@ -23,7 +23,7 @@ annotation __PBI_TimeIntelligenceEnabled = 0
 
 annotation PBI_ProTooling = ["DevMode","DaxQueryView_Desktop"]
 
-annotation PBI_QueryOrder = ["DataFolder","Fact_Transaction","Dim_Account","Fact_Card","Dim_Client","Bridge_Disp","Dim_District","Fact_Loan","Fact_Order","Dim_Date","Dim_TransType","Fact_Balance_Monthly","Dim_LoanStatus","Dim_CardType","_M_TaiChinh","_M_RuiRo","ML_CustomerSegment"]
+annotation PBI_QueryOrder = ["DataFolder","Fact_Transaction","Dim_Account","Fact_Card","Dim_Client","Bridge_Disp","Dim_District","Fact_Loan","Fact_Order","Dim_Date","Dim_TransType","Fact_Balance_Monthly","Dim_LoanStatus","Dim_CardType","_M_TaiChinh","_M_RuiRo","ML_CustomerSegment","ML_LoanCreditScoring"]
 
 ref table Fact_Transaction
 ref table Dim_Account
@@ -43,6 +43,7 @@ ref table _M_RuiRo
 ref table 'Chọn chỉ số'
 ref table WhatIf_DaysToLoan
 ref table ML_CustomerSegment
+ref table ML_LoanCreditScoring
 
 ref cultureInfo en-US
 

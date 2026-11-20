@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Active Delinquency Rate"
+                  "Property": "Tỷ lệ quá hạn (HĐ đang chạy)"
                 }
               },
-              "queryRef": "_M_RuiRo.Active Delinquency Rate",
-              "nativeQueryRef": "Active Delinquency Rate"
+              "queryRef": "_M_RuiRo.Tỷ lệ quá hạn (HĐ đang chạy)",
+              "nativeQueryRef": "Tỷ lệ quá hạn (HĐ đang chạy)"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Active Delinquency Rate"
+                "Property": "Tỷ lệ quá hạn (HĐ đang chạy)"
               }
             },
             "direction": "Descending"

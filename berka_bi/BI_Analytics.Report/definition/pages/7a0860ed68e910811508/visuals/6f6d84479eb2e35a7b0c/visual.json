@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "WhatIf_BadLoansAvoided"
+                  "Property": "Nợ xấu tránh được"
                 }
               },
-              "queryRef": "_M_RuiRo.WhatIf_BadLoansAvoided",
-              "nativeQueryRef": "WhatIf_BadLoansAvoided"
+              "queryRef": "_M_RuiRo.Nợ xấu tránh được",
+              "nativeQueryRef": "Nợ xấu tránh được"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "WhatIf_BadLoansAvoided"
+                "Property": "Nợ xấu tránh được"
               }
             },
             "direction": "Descending"
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Nợ xấu tránh được '"
+                  "Value": "'Nợ xấu tránh được'"
                 }
               }
             },

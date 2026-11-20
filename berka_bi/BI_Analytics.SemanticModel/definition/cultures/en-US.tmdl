@@ -11571,7 +11571,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Total Loans"
+			          "ConceptualProperty": "Tổng số khoản vay"
 			        }
 			      },
 			      "State": "Generated",
@@ -11703,7 +11703,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Total Loan Amount"
+			          "ConceptualProperty": "Tổng giải ngân"
 			        }
 			      },
 			      "State": "Generated",
@@ -11825,7 +11825,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Average Loan Amount"
+			          "ConceptualProperty": "Khoản vay bình quân"
 			        }
 			      },
 			      "State": "Generated",
@@ -11947,7 +11947,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Average Monthly Payment"
+			          "ConceptualProperty": "Trả góp hàng tháng bình quân"
 			        }
 			      },
 			      "State": "Generated",
@@ -12069,7 +12069,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Loan Penetration Rate"
+			          "ConceptualProperty": "Tỷ lệ thâm nhập tín dụng"
 			        }
 			      },
 			      "State": "Generated",
@@ -12197,7 +12197,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Estimated Outstanding Debt"
+			          "ConceptualProperty": "Dư nợ ước tính"
 			        }
 			      },
 			      "State": "Generated",
@@ -12325,7 +12325,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Title_Loan_Trend"
+			          "ConceptualProperty": "Tiêu đề quy mô giải ngân"
 			        }
 			      },
 			      "State": "Generated",
@@ -12336,7 +12336,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Title_Loan_Trend": {
+			          "Tiêu đề quy mô giải ngân": {
 			            "Type": "Noun",
 			            "State": "Generated",
 			            "Weight": 0.99
@@ -12460,7 +12460,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Bad Debt Exposure"
+			          "ConceptualProperty": "Tổng dư nợ xấu"
 			        }
 			      },
 			      "State": "Generated",
@@ -12588,7 +12588,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "NPL Rate"
+			          "ConceptualProperty": "Tỷ lệ nợ xấu (NPL)"
 			        }
 			      },
 			      "State": "Generated",
@@ -12710,7 +12710,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Ended Default Rate"
+			          "ConceptualProperty": "Tỷ lệ vỡ nợ (HĐ đã đóng)"
 			        }
 			      },
 			      "State": "Generated",
@@ -12838,7 +12838,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Active Delinquency Rate"
+			          "ConceptualProperty": "Tỷ lệ quá hạn (HĐ đang chạy)"
 			        }
 			      },
 			      "State": "Generated",
@@ -12966,7 +12966,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Expected Loss"
+			          "ConceptualProperty": "Tổn thất dự kiến (EL)"
 			        }
 			      },
 			      "State": "Generated",
@@ -13088,7 +13088,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "Title_NPL_Trend"
+			          "ConceptualProperty": "Tiêu đề xu hướng NPL"
 			        }
 			      },
 			      "State": "Generated",
@@ -13099,7 +13099,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Title_NPL_Trend": {
+			          "Tiêu đề xu hướng NPL": {
 			            "Type": "Noun",
 			            "State": "Generated",
 			            "Weight": 0.99
@@ -13223,7 +13223,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "NPL Benchmark"
+			          "ConceptualProperty": "Ngưỡng chuẩn NPL (3%)"
 			        }
 			      },
 			      "State": "Generated",
@@ -13345,7 +13345,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "WhatIf_BadLoansAvoided"
+			          "ConceptualProperty": "Nợ xấu tránh được"
 			        }
 			      },
 			      "State": "Generated",
@@ -13356,7 +13356,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "WhatIf_BadLoansAvoided": {
+			          "Nợ xấu tránh được": {
 			            "Type": "Noun",
 			            "State": "Generated",
 			            "Weight": 0.99
@@ -13408,7 +13408,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "WhatIf_GoodLoansMissed"
+			          "ConceptualProperty": "Vay tốt bị bỏ lỡ"
 			        }
 			      },
 			      "State": "Generated",
@@ -13419,7 +13419,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "WhatIf_GoodLoansMissed": {
+			          "Vay tốt bị bỏ lỡ": {
 			            "Type": "Noun",
 			            "State": "Generated",
 			            "Weight": 0.99
@@ -13471,7 +13471,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_M_RuiRo",
-			          "ConceptualProperty": "WhatIf_NewNPL"
+			          "ConceptualProperty": "Tỷ lệ NPL mới"
 			        }
 			      },
 			      "State": "Generated",
@@ -13482,7 +13482,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "WhatIf_NewNPL": {
+			          "Tỷ lệ NPL mới": {
 			            "Type": "Noun",
 			            "State": "Generated",
 			            "Weight": 0.99

@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Ended Default Rate"
+                  "Property": "Tỷ lệ vỡ nợ (HĐ đã đóng)"
                 }
               },
-              "queryRef": "_M_RuiRo.Ended Default Rate",
-              "nativeQueryRef": "Ended Default Rate"
+              "queryRef": "_M_RuiRo.Tỷ lệ vỡ nợ (HĐ đã đóng)",
+              "nativeQueryRef": "Tỷ lệ vỡ nợ (HĐ đã đóng)"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Ended Default Rate"
+                "Property": "Tỷ lệ vỡ nợ (HĐ đã đóng)"
               }
             },
             "direction": "Descending"

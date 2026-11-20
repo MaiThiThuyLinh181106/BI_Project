@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "WhatIf_NewNPL"
+                  "Property": "Tỷ lệ NPL mới"
                 }
               },
-              "queryRef": "_M_RuiRo.WhatIf_NewNPL",
-              "nativeQueryRef": "WhatIf_NewNPL"
+              "queryRef": "_M_RuiRo.Tỷ lệ NPL mới",
+              "nativeQueryRef": "Tỷ lệ NPL mới"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "WhatIf_NewNPL"
+                "Property": "Tỷ lệ NPL mới"
               }
             },
             "direction": "Descending"

@@ -42,10 +42,10 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Total Loans"
+                  "Property": "Tổng số khoản vay"
                 }
               },
-              "queryRef": "_M_RuiRo.Total Loans",
+              "queryRef": "_M_RuiRo.Tổng số khoản vay",
               "nativeQueryRef": "Số khoản vay",
               "displayName": "Số khoản vay"
             }
@@ -61,11 +61,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "NPL Rate"
+                  "Property": "Tỷ lệ nợ xấu (NPL)"
                 }
               },
-              "queryRef": "_M_RuiRo.NPL Rate",
-              "nativeQueryRef": "NPL Rate"
+              "queryRef": "_M_RuiRo.Tỷ lệ nợ xấu (NPL)",
+              "nativeQueryRef": "Tỷ lệ nợ xấu (NPL)"
             }
           ]
         }
@@ -80,7 +80,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "NPL Rate"
+                "Property": "Tỷ lệ nợ xấu (NPL)"
               }
             },
             "direction": "Descending"

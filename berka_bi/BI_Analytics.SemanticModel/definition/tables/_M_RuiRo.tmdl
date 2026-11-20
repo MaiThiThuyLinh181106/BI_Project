@@ -1,33 +1,33 @@
 table _M_RuiRo
 	lineageTag: 3dcd7fa8-766c-4a48-a58d-b90fdfbfb4e3
 
-	measure 'Total Loans' = COUNTROWS(Fact_Loan)
+	measure 'Tổng số khoản vay' = COUNTROWS(Fact_Loan)
 		formatString: #,0
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: dc9a49f7-c2b6-42f8-90bc-e5438218bd9c
 
-	measure 'Total Loan Amount' = SUM(Fact_Loan[amount])
+	measure 'Tổng giải ngân' = SUM(Fact_Loan[amount])
 		formatString: #,0
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: c48371fb-e3a5-4e2e-b095-732329687dcc
 
 		annotation PBI_FormatHint = {"isDecimal":true}
 
-	measure 'Average Loan Amount' = DIVIDE([Total Loan Amount], [Total Loans], 0)
+	measure 'Khoản vay bình quân' = DIVIDE([Tổng giải ngân], [Tổng số khoản vay], 0)
 		formatString: #,0
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: cf08c6b4-5b7f-4b2d-9627-94e3661d8d80
 
 		annotation PBI_FormatHint = {"isDecimal":true}
 
-	measure 'Average Monthly Payment' = AVERAGE(Fact_Loan[payments])
+	measure 'Trả góp hàng tháng bình quân' = AVERAGE(Fact_Loan[payments])
 		formatString: #,0
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: 7b8e11c5-61db-400d-a9a5-0369fe3349ec
 
 		annotation PBI_FormatHint = {"isDecimal":true}
 
-	measure 'Loan Penetration Rate' =
+	measure 'Tỷ lệ thâm nhập tín dụng' =
 			
 			DIVIDE(
 			    DISTINCTCOUNT(Fact_Loan[account_id]),
@@ -38,14 +38,14 @@ table _M_RuiRo
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: 18da9852-744d-470a-bb1e-89ac5d5c3f5f
 
-	measure 'Estimated Outstanding Debt' = SUM(Fact_Loan[EstimatedOutstandingBalance])
+	measure 'Dư nợ ước tính' = SUM(Fact_Loan[EstimatedOutstandingBalance])
 		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: 775b7c20-fc31-4135-8e47-a10678312515
 
 		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
 
-	measure Title_Loan_Trend =
+	measure 'Tiêu đề quy mô giải ngân' =
 			
 			VAR SelectedRegion = SELECTEDVALUE(Dim_District[region], "Toàn quốc")
 			VAR SelectedYear = SELECTEDVALUE(Dim_Date[Year], "1993 - 1998")
@@ -54,53 +54,56 @@ table _M_RuiRo
 		displayFolder: 5 Danh mục cho vay
 		lineageTag: 7d376451-c365-424e-9e9e-c49f952752aa
 
-	measure 'Bad Debt Exposure' =
+	measure 'Tổng dư nợ xấu' =
 			
-			CALCULATE(
-			    [Total Loan Amount],
-			    Fact_Loan[status] IN {"B", "D"}
+			COALESCE(
+			    CALCULATE(
+			        [Tổng giải ngân],
+			        Fact_Loan[status] IN {"B", "D"}
+			    ),
+			    0
 			)
 		formatString: #,0.00
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: ac90bcfd-7aff-4658-9b77-5c78d598288d
 
-	measure 'NPL Rate' =
+	measure 'Tỷ lệ nợ xấu (NPL)' =
 			
 			DIVIDE(
-			    [Bad Debt Exposure],
-			    [Total Loan Amount],
+			    [Tổng dư nợ xấu],
+			    [Tổng giải ngân],
 			    0
 			)
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: 6875d3e9-4918-499f-b00d-672caf2b44d0
 
-	measure 'Ended Default Rate' =
+	measure 'Tỷ lệ vỡ nợ (HĐ đã đóng)' =
 			
-			VAR EndedBadLoans = CALCULATE([Total Loans], Fact_Loan[status] = "B")
-			VAR TotalEndedLoans = CALCULATE([Total Loans], Fact_Loan[status] IN {"A", "B"})
+			VAR EndedBadLoans = CALCULATE([Tổng số khoản vay], Fact_Loan[status] = "B")
+			VAR TotalEndedLoans = CALCULATE([Tổng số khoản vay], Fact_Loan[status] IN {"A", "B"})
 			RETURN
 			DIVIDE(EndedBadLoans, TotalEndedLoans, 0)
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: d55e6e0d-0447-4b00-8326-95e3a6efc19a
 
-	measure 'Active Delinquency Rate' =
+	measure 'Tỷ lệ quá hạn (HĐ đang chạy)' =
 			
-			VAR ActiveBadLoans = CALCULATE([Total Loans], Fact_Loan[status] = "D")
-			VAR TotalActiveLoans = CALCULATE([Total Loans], Fact_Loan[status] IN {"C", "D"})
+			VAR ActiveBadLoans = CALCULATE([Tổng số khoản vay], Fact_Loan[status] = "D")
+			VAR TotalActiveLoans = CALCULATE([Tổng số khoản vay], Fact_Loan[status] IN {"C", "D"})
 			RETURN
 			DIVIDE(ActiveBadLoans, TotalActiveLoans, 0)
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: 0eca9ae3-c1da-4bf1-9d4b-f4a332627e60
 
-	measure 'Expected Loss' = 0.45 * [Bad Debt Exposure]
+	measure 'Tổn thất dự kiến (EL)' = 0.45 * [Tổng dư nợ xấu]
 		formatString: #,0
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: 5c0a282d-64ae-4d8b-bf3d-a65c8bca9d2f
 
-	measure Title_NPL_Trend =
+	measure 'Tiêu đề xu hướng NPL' =
 			
 			VAR SelectedRegion = SELECTEDVALUE(Dim_District[region], "Toàn hệ thống")
 			RETURN
@@ -108,48 +111,54 @@ table _M_RuiRo
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: a8566a65-ab52-4d99-9f84-950472bd530f
 
-	measure 'NPL Benchmark' = 0.03
+	measure 'Ngưỡng chuẩn NPL (3%)' = 0.03
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: df73c289-6de3-44f2-ab5a-e56c177b6c99
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure WhatIf_BadLoansAvoided =
+	measure 'Nợ xấu tránh được' = ```
 			
 			VAR Threshold = [WhatIf_DaysToLoan Value]
-			RETURN
-			CALCULATE(
-			    [Total Loans],
-			    FILTER(
-			        Fact_Loan,
-			        Fact_Loan[status] IN {"B", "D"} && Fact_Loan[DaysToLoan] < Threshold
+			VAR Result = 
+			    CALCULATE(
+			        [Tổng số khoản vay],
+			        FILTER(
+			            Fact_Loan,
+			            Fact_Loan[status] IN {"B", "D"} && Fact_Loan[DaysToLoan] < Threshold
+			        )
 			    )
-			)
+			RETURN
+			COALESCE(Result, 0)
+			```
 		formatString: 0
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: d485d3db-20e9-4b58-8e95-1be71493c376
 
-	measure WhatIf_GoodLoansMissed =
+	measure 'Vay tốt bị bỏ lỡ' = ```
 			
 			VAR Threshold = [WhatIf_DaysToLoan Value]
-			RETURN
-			CALCULATE(
-			    [Total Loans],
-			    FILTER(
-			        Fact_Loan,
-			        Fact_Loan[status] IN {"A", "C"} && Fact_Loan[DaysToLoan] < Threshold
+			VAR Result = 
+			    CALCULATE(
+			        [Tổng số khoản vay],
+			        FILTER(
+			            Fact_Loan,
+			            Fact_Loan[status] IN {"A", "C"} && Fact_Loan[DaysToLoan] < Threshold
+			        )
 			    )
-			)
+			RETURN
+			COALESCE(Result, 0)
+			```
 		formatString: 0
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: 34f2e89f-a080-40de-8399-d80b24fb3da2
 
-	measure WhatIf_NewNPL = ```
+	measure 'Tỷ lệ NPL mới' = ```
 			
 			VAR Threshold = [WhatIf_DaysToLoan Value]
 			VAR ApprovedBadDebt = 
 			    CALCULATE(
-			        [Total Loan Amount],
+			        [Tổng giải ngân],
 			        FILTER(
 			            Fact_Loan,
 			            Fact_Loan[status] IN {"B", "D"} && Fact_Loan[DaysToLoan] >= Threshold
@@ -157,7 +166,7 @@ table _M_RuiRo
 			    )
 			VAR ApprovedTotal = 
 			    CALCULATE(
-			        [Total Loan Amount],
+			        [Tổng giải ngân],
 			        FILTER(
 			            Fact_Loan,
 			            Fact_Loan[DaysToLoan] >= Threshold
@@ -169,6 +178,31 @@ table _M_RuiRo
 		formatString: 0.00%;-0.00%;0.00%
 		displayFolder: 6 Rủi ro & cảnh báo sớm
 		lineageTag: bc750548-8583-413b-bb84-9122a38136b2
+
+	measure 'Xác suất vỡ nợ bình quân' = AVERAGE(ML_LoanCreditScoring[PD_Score])
+		formatString: 0.00%
+		displayFolder: 7 Phân khúc & chấm điểm
+		lineageTag: e1b2c3d4-5f6a-4b7c-8d9e-0f1a2b3c4d5e
+
+	measure 'Số khoản rủi ro cao' =
+			
+			CALCULATE(
+			    [Tổng số khoản vay],
+			    ML_LoanCreditScoring[Risk_Group] = "Rủi ro cao"
+			)
+		formatString: #,0
+		displayFolder: 7 Phân khúc & chấm điểm
+		lineageTag: f2c3d4e5-6a7b-4c8d-9e0f-1a2b3c4d5e6f
+
+	measure 'Tổn thất dự kiến mô hình' =
+			
+			SUMX(
+			    Fact_Loan,
+			    RELATED(ML_LoanCreditScoring[PD_Score]) * 0.45 * Fact_Loan[amount]
+			)
+		formatString: #,0
+		displayFolder: 7 Phân khúc & chấm điểm
+		lineageTag: a3b4c5d6-7e8f-4a9b-0c1d-2e3f4a5b6c7d
 
 	column Column1
 		dataType: string
@@ -191,4 +225,3 @@ table _M_RuiRo
 				    #"Changed Type"
 
 	annotation PBI_ResultType = Table
-

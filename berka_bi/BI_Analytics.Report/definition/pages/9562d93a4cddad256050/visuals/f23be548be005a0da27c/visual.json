@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Average Monthly Payment"
+                  "Property": "Trả góp hàng tháng bình quân"
                 }
               },
-              "queryRef": "_M_RuiRo.Average Monthly Payment",
-              "nativeQueryRef": "Average Monthly Payment"
+              "queryRef": "_M_RuiRo.Trả góp hàng tháng bình quân",
+              "nativeQueryRef": "Trả góp hàng tháng bình quân"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Average Monthly Payment"
+                "Property": "Trả góp hàng tháng bình quân"
               }
             },
             "direction": "Descending"

@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Loan Penetration Rate"
+                  "Property": "Tỷ lệ thâm nhập tín dụng"
                 }
               },
-              "queryRef": "_M_RuiRo.Loan Penetration Rate",
-              "nativeQueryRef": "Loan Penetration Rate"
+              "queryRef": "_M_RuiRo.Tỷ lệ thâm nhập tín dụng",
+              "nativeQueryRef": "Tỷ lệ thâm nhập tín dụng"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Loan Penetration Rate"
+                "Property": "Tỷ lệ thâm nhập tín dụng"
               }
             },
             "direction": "Descending"

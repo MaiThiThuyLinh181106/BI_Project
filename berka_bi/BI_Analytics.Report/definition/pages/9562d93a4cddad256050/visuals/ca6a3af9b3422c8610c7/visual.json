@@ -42,11 +42,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Average Loan Amount"
+                  "Property": "Khoản vay bình quân"
                 }
               },
-              "queryRef": "_M_RuiRo.Average Loan Amount",
-              "nativeQueryRef": "Average Loan Amount"
+              "queryRef": "_M_RuiRo.Khoản vay bình quân",
+              "nativeQueryRef": "Khoản vay bình quân"
             }
           ]
         },
@@ -60,11 +60,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Average Monthly Payment"
+                  "Property": "Trả góp hàng tháng bình quân"
                 }
               },
-              "queryRef": "_M_RuiRo.Average Monthly Payment",
-              "nativeQueryRef": "Average Monthly Payment"
+              "queryRef": "_M_RuiRo.Trả góp hàng tháng bình quân",
+              "nativeQueryRef": "Trả góp hàng tháng bình quân"
             }
           ]
         }
@@ -79,7 +79,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Average Loan Amount"
+                "Property": "Khoản vay bình quân"
               }
             },
             "direction": "Descending"

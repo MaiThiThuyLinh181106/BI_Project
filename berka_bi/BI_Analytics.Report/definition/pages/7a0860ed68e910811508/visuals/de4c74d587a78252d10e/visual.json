@@ -42,11 +42,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "NPL Benchmark"
+                  "Property": "Ngưỡng chuẩn NPL (3%)"
                 }
               },
-              "queryRef": "_M_RuiRo.NPL Benchmark",
-              "nativeQueryRef": "NPL Benchmark"
+              "queryRef": "_M_RuiRo.Ngưỡng chuẩn NPL (3%)",
+              "nativeQueryRef": "Ngưỡng chuẩn NPL (3%)"
             },
             {
               "field": {
@@ -56,11 +56,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "NPL Rate"
+                  "Property": "Tỷ lệ nợ xấu (NPL)"
                 }
               },
-              "queryRef": "_M_RuiRo.NPL Rate",
-              "nativeQueryRef": "NPL Rate"
+              "queryRef": "_M_RuiRo.Tỷ lệ nợ xấu (NPL)",
+              "nativeQueryRef": "Tỷ lệ nợ xấu (NPL)"
             }
           ]
         },
@@ -74,11 +74,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Total Loans"
+                  "Property": "Tổng số khoản vay"
                 }
               },
-              "queryRef": "_M_RuiRo.Total Loans",
-              "nativeQueryRef": "Total Loans"
+              "queryRef": "_M_RuiRo.Tổng số khoản vay",
+              "nativeQueryRef": "Tổng số khoản vay"
             }
           ]
         }
@@ -93,7 +93,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "NPL Benchmark"
+                "Property": "Ngưỡng chuẩn NPL (3%)"
               }
             },
             "direction": "Descending"

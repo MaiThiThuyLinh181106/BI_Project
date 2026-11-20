@@ -42,11 +42,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Total Loan Amount"
+                  "Property": "Tổng giải ngân"
                 }
               },
-              "queryRef": "_M_RuiRo.Total Loan Amount",
-              "nativeQueryRef": "Total Loan Amount"
+              "queryRef": "_M_RuiRo.Tổng giải ngân",
+              "nativeQueryRef": "Tổng giải ngân"
             }
           ]
         },
@@ -60,11 +60,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Total Loans"
+                  "Property": "Tổng số khoản vay"
                 }
               },
-              "queryRef": "_M_RuiRo.Total Loans",
-              "nativeQueryRef": "Total Loans"
+              "queryRef": "_M_RuiRo.Tổng số khoản vay",
+              "nativeQueryRef": "Tổng số khoản vay"
             }
           ]
         }
@@ -79,7 +79,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Total Loan Amount"
+                "Property": "Tổng giải ngân"
               }
             },
             "direction": "Descending"

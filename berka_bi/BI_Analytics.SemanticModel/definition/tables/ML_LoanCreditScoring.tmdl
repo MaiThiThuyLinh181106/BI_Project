@@ -1,0 +1,206 @@
+table ML_LoanCreditScoring
+	lineageTag: a7b1c3d4-8e9f-4a5b-9c1d-2e3f4a5b6c7d
+
+	column loan_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e
+		summarizeBy: none
+		sourceColumn: loan_id
+
+		annotation SummarizationSetBy = User
+
+	column account_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c2d3e4f5-a6b7-4c8d-9e0f-1a2b3c4d5e6f
+		summarizeBy: none
+		sourceColumn: account_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column LoanAmount
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: d3e4f5a6-b7c8-4d9e-0f1a-2b3c4d5e6f7a
+		summarizeBy: sum
+		sourceColumn: LoanAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column LoanDuration
+		dataType: int64
+		formatString: 0
+		lineageTag: e4f5a6b7-c8d9-4e0f-1a2b-3c4d5e6f7a8b
+		summarizeBy: none
+		sourceColumn: LoanDuration
+
+		annotation SummarizationSetBy = User
+
+	column MonthlyPayment
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: f5a6b7c8-d9e0-4f1a-2b3c-4d5e6f7a8b9c
+		summarizeBy: sum
+		sourceColumn: MonthlyPayment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column DaysToLoan
+		dataType: int64
+		formatString: 0
+		lineageTag: a6b7c8d9-e0f1-4a2b-3c4d-5e6f7a8b9c0d
+		summarizeBy: average
+		sourceColumn: DaysToLoan
+
+		annotation SummarizationSetBy = User
+
+	column AvgBalance_90d
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: b7c8d9e0-f1a2-4b3c-4d5e-6f7a8b9c0d1e
+		summarizeBy: average
+		sourceColumn: AvgBalance_90d
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column MinBalance_90d
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: c8d9e0f1-a2b3-4c4d-5e6f-7a8b9c0d1e2f
+		summarizeBy: average
+		sourceColumn: MinBalance_90d
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column NegBalanceCount_90d
+		dataType: int64
+		formatString: 0
+		lineageTag: d9e0f1a2-b3c4-4d5e-6f7a-8b9c0d1e2f3a
+		summarizeBy: average
+		sourceColumn: NegBalanceCount_90d
+
+		annotation SummarizationSetBy = User
+
+	column DSR
+		dataType: double
+		formatString: 0.00%
+		lineageTag: e0f1a2b3-c4d5-4e6f-7a8b-9c0d1e2f3a4b
+		summarizeBy: average
+		sourceColumn: DSR
+
+		annotation SummarizationSetBy = User
+
+	column Status
+		dataType: string
+		lineageTag: f1a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Default
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a2b3c4d5-e6f7-4a8b-9c0d-1e2f3a4b5c6d
+		summarizeBy: sum
+		sourceColumn: Default
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column PD_Score
+		dataType: double
+		formatString: 0.00%
+		lineageTag: b3c4d5e6-f7a8-4b9c-0d1e-2f3a4b5c6d7e
+		summarizeBy: average
+		sourceColumn: PD_Score
+
+		annotation SummarizationSetBy = User
+
+	column Risk_Group
+		dataType: string
+		lineageTag: c4d5e6f7-a8b9-4c0d-1e2f-3a4b5c6d7e8f
+		summarizeBy: none
+		sourceColumn: Risk_Group
+		sortByColumn: Risk_Order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Risk_Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d5e6f7a8-b9c0-4d1e-2f3a-4b5c6d7e8f9a
+		summarizeBy: none
+		sourceColumn: Risk_Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Predicted_Default
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e6f7a8b9-c0d1-4e2f-3a4b-5c6d7e8f9a0b
+		summarizeBy: sum
+		sourceColumn: Predicted_Default
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	partition ML_LoanCreditScoring = m
+		mode: import
+		queryGroup: Dimension
+		source =
+				let
+				    Source = Csv.Document(
+				        File.Contents(DataFolder & "ml_loan_credit_scoring.csv"),
+				        [Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None]
+				    ),
+				    PromotedHeaders = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    ChangedType = Table.TransformColumnTypes(
+				        PromotedHeaders,
+				        {
+				            {"loan_id", Int64.Type},
+				            {"account_id", Int64.Type},
+				            {"LoanAmount", Currency.Type},
+				            {"LoanDuration", Int64.Type},
+				            {"MonthlyPayment", Currency.Type},
+				            {"DaysToLoan", Int64.Type},
+				            {"AvgBalance_90d", Currency.Type},
+				            {"MinBalance_90d", Currency.Type},
+				            {"NegBalanceCount_90d", Int64.Type},
+				            {"DSR", type number},
+				            {"Status", type text},
+				            {"Default", Int64.Type},
+				            {"PD_Score", type number},
+				            {"Risk_Group", type text},
+				            {"Risk_Order", Int64.Type},
+				            {"Predicted_Default", Int64.Type}
+				        },
+				        "en-US"
+				    )
+				in
+				    ChangedType
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

@@ -67,3 +67,7 @@ relationship b26ae7db-b9ec-d99d-3141-a4ae04259805
 	fromColumn: Dim_Account.account_id
 	toColumn: ML_CustomerSegment.account_id
 
+relationship c37bf8ea-c0fd-eaae-4252-b5bf1536a116
+	fromColumn: Fact_Loan.loan_id
+	toColumn: ML_LoanCreditScoring.loan_id
+

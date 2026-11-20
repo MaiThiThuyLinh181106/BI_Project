@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Average Loan Amount"
+                  "Property": "Khoản vay bình quân"
                 }
               },
-              "queryRef": "_M_RuiRo.Average Loan Amount",
-              "nativeQueryRef": "Average Loan Amount"
+              "queryRef": "_M_RuiRo.Khoản vay bình quân",
+              "nativeQueryRef": "Khoản vay bình quân"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Average Loan Amount"
+                "Property": "Khoản vay bình quân"
               }
             },
             "direction": "Descending"

@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Bad Debt Exposure"
+                  "Property": "Tổng dư nợ xấu"
                 }
               },
-              "queryRef": "_M_RuiRo.Bad Debt Exposure",
-              "nativeQueryRef": "Bad Debt Exposure"
+              "queryRef": "_M_RuiRo.Tổng dư nợ xấu",
+              "nativeQueryRef": "Tổng dư nợ xấu"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Bad Debt Exposure"
+                "Property": "Tổng dư nợ xấu"
               }
             },
             "direction": "Descending"

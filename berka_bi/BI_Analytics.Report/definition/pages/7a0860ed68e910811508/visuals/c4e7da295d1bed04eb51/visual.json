@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "NPL Rate"
+                  "Property": "Tỷ lệ nợ xấu (NPL)"
                 }
               },
-              "queryRef": "_M_RuiRo.NPL Rate",
-              "nativeQueryRef": "NPL Rate"
+              "queryRef": "_M_RuiRo.Tỷ lệ nợ xấu (NPL)",
+              "nativeQueryRef": "Tỷ lệ nợ xấu (NPL)"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "NPL Rate"
+                "Property": "Tỷ lệ nợ xấu (NPL)"
               }
             },
             "direction": "Descending"
@@ -193,7 +193,7 @@
                 "Entity": "_M_RuiRo"
               }
             },
-            "Property": "NPL Rate"
+            "Property": "Tỷ lệ nợ xấu (NPL)"
           }
         },
         "type": "Advanced"

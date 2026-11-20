@@ -60,11 +60,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Total Loans"
+                  "Property": "Tổng số khoản vay"
                 }
               },
-              "queryRef": "_M_RuiRo.Total Loans",
-              "nativeQueryRef": "Total Loans"
+              "queryRef": "_M_RuiRo.Tổng số khoản vay",
+              "nativeQueryRef": "Tổng số khoản vay"
             }
           ]
         }
@@ -79,7 +79,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Total Loans"
+                "Property": "Tổng số khoản vay"
               }
             },
             "direction": "Descending"

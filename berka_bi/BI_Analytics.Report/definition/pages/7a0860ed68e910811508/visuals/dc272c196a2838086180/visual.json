@@ -23,11 +23,11 @@
                       "Entity": "_M_RuiRo"
                     }
                   },
-                  "Property": "Expected Loss"
+                  "Property": "Tổn thất dự kiến (EL)"
                 }
               },
-              "queryRef": "_M_RuiRo.Expected Loss",
-              "nativeQueryRef": "Expected Loss"
+              "queryRef": "_M_RuiRo.Tổn thất dự kiến (EL)",
+              "nativeQueryRef": "Tổn thất dự kiến (EL)"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_M_RuiRo"
                   }
                 },
-                "Property": "Expected Loss"
+                "Property": "Tổn thất dự kiến (EL)"
               }
             },
             "direction": "Descending"
@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Tổn thất ước tính trên nợ xấu'"
+                  "Value": "'Tổn thất dự kiến (EL)'"
                 }
               }
             },
