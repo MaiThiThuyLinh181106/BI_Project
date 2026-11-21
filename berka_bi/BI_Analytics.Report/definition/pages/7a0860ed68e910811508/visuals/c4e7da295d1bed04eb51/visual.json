@@ -181,23 +181,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "7d74a853b87bdc12ac18",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_M_RuiRo"
-              }
-            },
-            "Property": "Tỷ lệ nợ xấu (NPL)"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

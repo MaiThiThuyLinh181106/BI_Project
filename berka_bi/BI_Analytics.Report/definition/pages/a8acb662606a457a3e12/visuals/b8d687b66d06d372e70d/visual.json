@@ -3,9 +3,9 @@
   "name": "b8d687b66d06d372e70d",
   "position": {
     "x": 48.573436401967676,
-    "y": 959.74410545956823,
+    "y": 934.61991421717119,
     "z": 5000,
-    "height": 95.471926721108886,
+    "height": 120.59611796350596,
     "width": 897.77110039498882,
     "tabOrder": 5000
   },
@@ -22,13 +22,13 @@
                     "value": "Phát hiện: ",
                     "textStyle": {
                       "fontWeight": "bold",
-                      "fontSize": "14pt"
+                      "fontSize": "16pt"
                     }
                   },
                   {
                     "value": "Chỉ 19,8% tài khoản có thẻ, nhưng số thẻ phát hành mới tăng gần gấp đôi mỗi năm. Khách có thẻ có số dư bình quân cao hơn khoảng 60% so với khách chưa có thẻ. Còn 641 tài khoản số dư cao chưa có thẻ, tập trung ở nhóm 30–60 tuổi. Lệnh chi định kỳ chủ yếu cho chi tiêu gia đình, bảo hiểm rất ít.",
                     "textStyle": {
-                      "fontSize": "14pt"
+                      "fontSize": "16pt"
                     }
                   }
                 ]

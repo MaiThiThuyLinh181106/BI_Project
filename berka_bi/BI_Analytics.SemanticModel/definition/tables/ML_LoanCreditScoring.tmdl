@@ -204,3 +204,4 @@ table ML_LoanCreditScoring
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
+

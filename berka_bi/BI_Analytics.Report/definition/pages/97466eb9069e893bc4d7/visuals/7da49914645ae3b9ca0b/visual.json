@@ -4,10 +4,10 @@
   "position": {
     "x": 1192.2367776496058,
     "y": 99.0294391858793,
-    "z": 16001,
+    "z": 16000,
     "height": 120,
     "width": 300,
-    "tabOrder": 16001
+    "tabOrder": 16000
   },
   "visual": {
     "visualType": "card",
@@ -181,23 +181,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "b457c27ce96367b1bda4",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_M_RuiRo"
-              }
-            },
-            "Property": "Tỷ lệ nợ xấu (NPL)"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
